@@ -1,0 +1,8 @@
+{
+    "rules": [
+        {
+            "filename": ".psqlrc",
+            "destination": "{home}/.psqlrc"
+        }
+    ]
+}
