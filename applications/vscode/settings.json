@@ -1,0 +1,82 @@
+{
+    "breadcrumbs.enabled": true,
+
+    // "editor.cursorSmoothCaretAnimation": true,
+    "editor.fontFamily": "'Source Code Pro', 'Ubuntu Mono', Menlo, Monaco, 'Courier New', monospace",
+    "editor.fontLigatures": false,
+    "editor.fontSize": 15,
+    "editor.minimap.renderCharacters": false,
+    "editor.minimap.showSlider": "always",
+    "editor.renderIndentGuides": false,
+    "editor.renderWhitespace": "boundary",
+    "editor.rulers": [
+        80
+    ],
+
+    "files.exclude":{
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/*.coverprofile": true,
+        "**/*.out": true
+    },
+    "files.watcherExclude":{
+        "**/.git/objects/**": true,
+        "**/.git/subtree-cache/**": true,
+        "**/node_modules/**": true,
+        "**/vendor/**": true
+    },
+
+    "git.autofetch": true,
+
+    "go.formatTool": "goimports",
+    "go.lintFlags": [
+        "--vendor",
+        "--disable-all",
+        "--enable=vet",
+        "--enable=vetshadow",
+        "--enable=golint",
+        "--enable=ineffassign",
+        "--enable=goconst",
+        "--enable=deadcode"
+    ],
+    "go.lintTool": "gometalinter",
+
+    "rust.build_on_save": true,
+
+    "search.exclude": {
+        "**/node_modules": true,
+        "**/bower_components": true,
+        "**/vendor": true
+    },
+
+    "telemetry.enableTelemetry": false,
+
+    "terminal.integrated.fontSize": 16,
+    "terminal.integrated.lineHeight": 1.2,
+
+    "tslint.packageManager": "yarn",
+
+    "window.nativeTabs": true,
+    "window.zoomLevel": 0,
+
+    "workbench.colorCustomizations": {
+        "statusBar.background": "#1A1A1A"
+    },
+    "workbench.statusBar.feedback.visible": false,
+
+    "[go]": {
+        "editor.tabSize": 8
+    },
+    "[javascript]": {
+        "editor.formatOnSave": true
+    },
+    "[rust]": {
+        "editor.formatOnSave": true
+    },
+    "[typescript]": {
+        "editor.formatOnSave": true
+    }
+}
