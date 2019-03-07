@@ -60,6 +60,7 @@
     "tslint.packageManager": "yarn",
 
     "window.nativeTabs": true,
+    "window.titleBarStyle": "custom",
     "window.zoomLevel": 0,
 
     "workbench.colorCustomizations": {
