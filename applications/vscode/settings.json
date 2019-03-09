@@ -45,6 +45,8 @@
     "go.lintTool": "gometalinter",
 
     "rust.build_on_save": true,
+    "rust.clippy_preference": "on",
+    "rust-client.channel": "stable",
 
     "search.exclude": {
         "**/node_modules": true,
