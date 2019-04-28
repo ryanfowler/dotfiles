@@ -1,0 +1,8 @@
+{
+    "rules": [
+        {
+            "filename": ".tmux.conf",
+            "destination": "{home}/.tmux.conf"
+        }
+    ]
+}
