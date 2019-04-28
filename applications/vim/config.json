@@ -1,0 +1,8 @@
+{
+    "rules": [
+        {
+            "filename": ".vimrc",
+            "destination": "{home}/.vimrc"
+        }
+    ]
+}
