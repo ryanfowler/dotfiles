@@ -32,6 +32,9 @@
     "git.autofetch": true,
 
     "go.formatTool": "goimports",
+    "go.languageServerExperimentalFeatures": {
+        "diagnostics": true
+    },
     "go.lintFlags": [
         "--vendor",
         "--disable-all",
@@ -43,6 +46,12 @@
         "--enable=deadcode"
     ],
     "go.lintTool": "gometalinter",
+    "go.useLanguageServer": true,
+
+    "gopls": {
+        "usePlaceholders": true,
+        "enhancedHover": true
+    },
 
     "rust.build_on_save": true,
     "rust.clippy_preference": "on",
@@ -71,6 +80,11 @@
     "workbench.statusBar.feedback.visible": false,
 
     "[go]": {
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": true
+        },
+        "editor.formatOnSave": true,
+        "editor.snippetSuggestions": "none",
         "editor.tabSize": 8
     },
     "[javascript]": {
