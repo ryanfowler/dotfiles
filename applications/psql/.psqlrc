@@ -3,3 +3,7 @@
 
 -- Format output automatically.
 \x auto
+
+-- Render nulls.
+\pset null '~'
+
