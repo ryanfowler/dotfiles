@@ -1,10 +1,10 @@
 {
-    "breadcrumbs.enabled": true,
+    "breadcrumbs.enabled": false,
 
-    // "editor.cursorSmoothCaretAnimation": true,
     "editor.fontFamily": "'Source Code Pro', 'Ubuntu Mono', Menlo, Monaco, 'Courier New', monospace",
     "editor.fontLigatures": false,
     "editor.fontSize": 15,
+    "editor.minimap.enabled": false,
     "editor.minimap.renderCharacters": false,
     "editor.minimap.showSlider": "always",
     "editor.renderIndentGuides": false,
@@ -33,19 +33,14 @@
 
     "go.formatTool": "goimports",
     //"go.languageServerExperimentalFeatures": {
-    //    "diagnostics": true
+    //    "diagnostics": true,
+    //    "format": true,
+    //    "autoComplete": true
     //},
     "go.lintFlags": [
-        "--vendor",
-        "--disable-all",
-        "--enable=vet",
-        "--enable=vetshadow",
-        "--enable=golint",
-        "--enable=ineffassign",
-        "--enable=goconst",
-        "--enable=deadcode"
+        "--fast",
     ],
-    "go.lintTool": "gometalinter",
+    "go.lintTool": "golangci-lint",
     //"go.useLanguageServer": true,
 
     //"gopls": {
@@ -84,7 +79,7 @@
         //    "source.organizeImports": true
         //},
         //"editor.formatOnSave": true,
-        "editor.snippetSuggestions": "none",
+        //"editor.snippetSuggestions": "none",
         "editor.tabSize": 8
     },
     "[javascript]": {
@@ -94,6 +89,7 @@
         "editor.formatOnSave": true
     },
     "[typescript]": {
-        "editor.formatOnSave": true
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
     }
 }
