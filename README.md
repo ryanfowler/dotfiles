@@ -4,10 +4,10 @@ My personal dotfiles
 
 ### Usage
 
-To create all the necessary symlinks, run the script:
+To create all the necessary symlinks, run the script (requires nodejs):
 
 ```
-node lib/app.js
+./run.sh
 ```
 
 ### License

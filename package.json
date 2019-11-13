@@ -1,0 +1,20 @@
+{
+  "name": "dotfiles",
+  "version": "1.0.0",
+  "description": "Ryan Fowler's Dotfiles",
+  "main": "dist/app.js",
+  "repository": "git@github.com:ryanfowler/dotfiles.git",
+  "author": "Ryan Fowler <ryan.fowler19@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "@types/node": "^12.12.7",
+    "@typescript-eslint/eslint-plugin": "^2.7.0",
+    "@typescript-eslint/parser": "^2.7.0",
+    "eslint": "^6.6.0",
+    "eslint-config-prettier": "^6.5.0",
+    "eslint-plugin-prettier": "^3.1.1",
+    "prettier": "^1.19.1",
+    "typescript": "^3.7.2"
+  }
+}

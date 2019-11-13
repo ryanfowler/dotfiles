@@ -1,10 +1,10 @@
-const fs = require("fs");
-const path = require("path");
+import fs from "fs";
+import path from "path";
 
-async function copyFile(src, dest) {
-    src = await realPath(src);
+export const copyFile = async (src: string, dest: string): Promise<void> => {
+    const realSrc = await realPath(src);
     return new Promise((resolve, reject) => {
-        fs.copyFile(src, dest, (err) => {
+        fs.copyFile(realSrc, dest, (err) => {
             if (err) {
                 reject(err);
                 return;
@@ -12,9 +12,9 @@ async function copyFile(src, dest) {
             resolve();
         });
     });
-}
+};
 
-function exists(filepath) {
+export const exists = async (filepath: string): Promise<boolean> => {
     return new Promise((resolve) => {
         fs.lstat(filepath, (err) => {
             if (err) {
@@ -24,9 +24,9 @@ function exists(filepath) {
             }
         });
     });
-}
+};
 
-function isDir(filepath) {
+export const isDir = (filepath: string): Promise<boolean> => {
     return new Promise((resolve, reject) => {
         fs.stat(filepath, (err, stats) => {
             if (err) {
@@ -36,9 +36,9 @@ function isDir(filepath) {
             resolve(stats.isDirectory());
         });
     });
-}
+};
 
-function readDir(filepath) {
+export const readDir = (filepath: string): Promise<string[]> => {
     return new Promise((resolve, reject) => {
         fs.readdir(filepath, (err, files) => {
             if (err) {
@@ -52,21 +52,21 @@ function readDir(filepath) {
             );
         });
     });
-}
+};
 
-function readFile(filepath) {
+export const readFile = (filepath: string): Promise<string> => {
     return new Promise((resolve, reject) => {
         fs.readFile(filepath, (err, data) => {
             if (err) {
                 reject(err);
                 return;
             }
-            resolve(data);
+            resolve(data.toString());
         });
     });
-}
+};
 
-function remove(filepath) {
+export const remove = (filepath: string): Promise<void> => {
     return new Promise((resolve, reject) => {
         fs.unlink(filepath, (err) => {
             if (err) {
@@ -76,12 +76,12 @@ function remove(filepath) {
             resolve();
         });
     });
-}
+};
 
-async function symlink(src, dest) {
-    src = await realPath(src);
+export const symlink = async (src: string, dest: string): Promise<void> => {
+    const realSrc = await realPath(src);
     return new Promise((resolve, reject) => {
-        fs.symlink(src, dest, (err) => {
+        fs.symlink(realSrc, dest, (err) => {
             if (err) {
                 reject(err);
                 return;
@@ -89,9 +89,9 @@ async function symlink(src, dest) {
             resolve();
         });
     });
-}
+};
 
-function realPath(filepath) {
+export const realPath = (filepath: string): Promise<string> => {
     return new Promise((resolve, reject) => {
         fs.realpath(filepath, (err, realPath) => {
             if (err) {
@@ -101,14 +101,4 @@ function realPath(filepath) {
             resolve(realPath);
         });
     });
-}
-
-module.exports = {
-    copyFile,
-    exists,
-    isDir,
-    readDir,
-    readFile,
-    remove,
-    symlink,
 };

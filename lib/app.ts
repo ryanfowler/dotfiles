@@ -1,8 +1,8 @@
-const os = require("os");
-const path = require("path");
-const { performance } = require("perf_hooks");
+import os from "os";
+import path from "path";
+import { performance } from "perf_hooks";
 
-const fs = require("./files");
+import * as fs from "./files";
 
 const homedir = os.homedir();
 const platform = os.platform();
@@ -37,12 +37,12 @@ async function run() {
     });
 }
 
-async function getApps(dir) {
+async function getApps(dir: string): Promise<string[]> {
     const files = await fs.readDir(dir);
     return await filterDirs(files);
 }
 
-async function filterDirs(files) {
+async function filterDirs(files: string[]): Promise<string[]> {
     const dirs = [];
     for (const file of files) {
         const isDir = await fs.isDir(file);
@@ -53,7 +53,7 @@ async function filterDirs(files) {
     return dirs;
 }
 
-async function processApps(dirs) {
+async function processApps(dirs: string[]): Promise<AppResult[]> {
     dirs.sort();
     const ps = dirs.map(async (dir) => {
         return await processApp(dir);
@@ -61,13 +61,24 @@ async function processApps(dirs) {
     return Promise.all(ps);
 }
 
-async function processApp(dir) {
-    const config = await parseAppConfig(dir);
+interface AppResult {
+    app: string;
+    results: RuleResult[];
+}
+
+interface RuleResult {
+    rule: Rule;
+    status: string;
+    message?: string;
+}
+
+async function processApp(dir: string): Promise<AppResult> {
+    const rules = await parseAppConfig(dir);
     const results = [];
-    for (const rule of config.rules) {
-        const res = { rule };
+    for (const rule of rules) {
+        const res: RuleResult = { rule, status: "" };
         try {
-            await processAppRule(config.dir, rule);
+            await processAppRule(dir, rule);
             res.status = "ok";
         } catch (e) {
             res.status = "error";
@@ -79,7 +90,7 @@ async function processApp(dir) {
     return { app: dir, results };
 }
 
-async function processAppRule(dir, rule) {
+async function processAppRule(dir: string, rule: Rule): Promise<void> {
     const exists = await fs.exists(rule.destination);
     if (exists) {
         await fs.copyFile(rule.destination, `${rule.destination}.bak`);
@@ -89,32 +100,40 @@ async function processAppRule(dir, rule) {
     await fs.symlink(filepath, rule.destination);
 }
 
-async function parseAppConfig(dir) {
+interface Rule {
+    destination: string;
+    filename: string;
+}
+
+interface Platform {
+    destination?: string;
+}
+
+interface ConfigRule {
+    filename: string;
+    destination?: string;
+    darwin?: Platform;
+    linux?: Platform;
+}
+
+interface Config {
+    rules: ConfigRule[];
+}
+
+async function parseAppConfig(dir: string): Promise<Rule[]> {
     const raw = await fs.readFile(path.join(dir, "config.json"));
-    const config = JSON.parse(raw);
+    const config = JSON.parse(raw) as Config;
     if (!config.rules) {
         throw new Error(`${dir}: no rules defined`);
     }
-    if (!Array.isArray(config.rules)) {
-        throw new Error(`${dir}: rules must be an array`);
-    }
     const rules = config.rules.map((v, i) => {
-        if (typeof v !== "object") {
-            throw new Error(`${dir}: rule ${i} must be an object`);
+        let destination = v.destination;
+        if (platform === "darwin" && v.darwin) {
+            destination = v.darwin.destination ?? destination;
+        } else if (platform === "linux" && v.linux) {
+            destination = v.linux.destination ?? destination;
         }
-        if (
-            !v.filename ||
-            typeof v.filename !== "string" ||
-            v.filename === ""
-        ) {
-            throw new Error(`${dir}: rule ${i} must provide a valid filename`);
-        }
-        let destination = v.destination || "";
-        const plat = v[platform];
-        if (plat && plat.destination && typeof plat.destination === "string") {
-            destination = plat.destination;
-        }
-        destination = destination.replace("{home}", homedir);
+        destination = destination?.replace("{home}", homedir);
         if (!destination || destination === "") {
             throw new Error(`${dir}: rule ${i} must provide a destination`);
         }
@@ -123,5 +142,5 @@ async function parseAppConfig(dir) {
             destination,
         };
     });
-    return { dir, rules };
+    return rules;
 }
