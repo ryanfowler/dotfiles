@@ -13,6 +13,7 @@
     ],
 
     "eslint.autoFixOnSave": true,
+    "eslint.packageManager": "yarn",
     "eslint.validate": [
         "javascript",
         "javascriptreact",
@@ -41,7 +42,10 @@
     "go.alternateTools": {
         "golangci-lint": "/Users/ryanfowler/go/bin/golangci-lint",
     },
-    "go.buildTags": "-mod=vendor",
+    "go.buildFlags": [
+        "-mod=vendor",
+    ],
+    "go.buildTags": "es6 es7 postgres redis",
     "go.formatTool": "goimports",
     "go.lintFlags": [
         "--fast",
