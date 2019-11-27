@@ -126,7 +126,7 @@ async function parseAppConfig(dir: string): Promise<Rule[]> {
     if (!config.rules) {
         throw new Error(`${dir}: no rules defined`);
     }
-    const rules = config.rules.map((v, i) => {
+    return config.rules.map((v, i) => {
         let destination = v.destination;
         if (platform === "darwin" && v.darwin) {
             destination = v.darwin.destination ?? destination;
@@ -142,5 +142,4 @@ async function parseAppConfig(dir: string): Promise<Rule[]> {
             destination,
         };
     });
-    return rules;
 }
