@@ -1,6 +1,9 @@
 {
     "breadcrumbs.enabled": false,
 
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true
+    },
     "editor.fontFamily": "'Source Code Pro', 'Ubuntu Mono', Menlo, Monaco, 'Courier New', monospace",
     "editor.fontSize": 15,
     "editor.minimap.enabled": false,
@@ -12,15 +15,7 @@
         80
     ],
 
-    "eslint.autoFixOnSave": true,
     "eslint.packageManager": "yarn",
-    "eslint.run": "onSave",
-    "eslint.validate": [
-        "javascript",
-        "javascriptreact",
-        { "language": "typescript", "autoFix":  true },
-        { "language": "typescriptreact", "autoFix":  true },
-    ],
 
     "files.exclude":{
         "**/.git": true,
@@ -31,7 +26,7 @@
         "**/*.coverprofile": true,
         "**/*.out": true,
     },
-    "files.watcherExclude":{
+    "files.watcherExclude": {
         "**/.git/objects/**": true,
         "**/.git/subtree-cache/**": true,
         "**/node_modules/**": true,
@@ -40,19 +35,28 @@
 
     "git.autofetch": true,
 
-    "go.alternateTools": {
-        "golangci-lint": "/Users/ryanfowler/go/bin/golangci-lint",
-    },
     "go.buildFlags": [
         "-mod=vendor",
     ],
     "go.buildTags": "es6 es7 postgres redis",
     "go.formatTool": "goimports",
+    "go.languageServerExperimentalFeatures": {
+        "format": false
+    },
     "go.lintFlags": [
         "--fast",
     ],
     "go.lintTool": "golangci-lint",
+    "go.testOnSave": false,
     "go.useLanguageServer": true,
+    "go.vetOnSave": "off",
+
+    "gopls": {
+        "completeUnimported": true,
+        "usePlaceholders": true,
+    },
+
+    "javascript.updateImportsOnFileMove.enabled": "always",
 
     "rust.build_on_save": true,
     "rust.clippy_preference": "on",
@@ -78,9 +82,15 @@
     },
 
     "[go]": {
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": true,
+        },
+        "editor.formatOnSave": true,
+        "editor.snippetSuggestions": "none",
         "editor.tabSize": 8,
+        "editor.defaultFormatter": "ms-vscode.Go",
     },
     "[rust]": {
         "editor.formatOnSave": true,
-    },
+    }
 }
