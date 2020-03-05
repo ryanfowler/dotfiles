@@ -35,9 +35,6 @@
 
     "git.autofetch": true,
 
-    "go.buildFlags": [
-        "-mod=vendor",
-    ],
     "go.buildTags": "es6 es7 postgres redis",
     "go.formatTool": "goimports",
     "go.languageServerExperimentalFeatures": {
@@ -80,6 +77,8 @@
     "workbench.colorCustomizations": {
         "statusBar.background": "#1A1A1A",
     },
+    "workbench.editor.limit.enabled": true,
+    "workbench.editor.limit.value": 6,
 
     "[go]": {
         "editor.codeActionsOnSave": {
