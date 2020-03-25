@@ -55,6 +55,12 @@
 
     "javascript.updateImportsOnFileMove.enabled": "always",
 
+    "protoc": {
+        "options": [
+            "--proto_path=${env.GOPATH}/src"
+        ]
+    },
+
     "rust.build_on_save": true,
     "rust.clippy_preference": "on",
     "rust-client.channel": "stable",
