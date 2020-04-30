@@ -36,6 +36,3 @@ set rulerformat=%l,%c
 "hi CursorLineNr ctermfg=5 ctermbg=233 cterm=NONE guifg=#5F5F5F guibg=#121212 gui=NONE
 
 set t_Co=256
-set t_ut=
-colorscheme codedark
-
