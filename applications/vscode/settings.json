@@ -76,6 +76,8 @@
     "terminal.integrated.fontSize": 16,
     "terminal.integrated.lineHeight": 1.2,
 
+    "typescript.updateImportsOnFileMove.enabled": "always",
+
     "window.nativeTabs": true,
     "window.titleBarStyle": "custom",
     "window.zoomLevel": 0,
