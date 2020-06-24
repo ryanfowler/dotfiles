@@ -95,9 +95,8 @@
         "editor.formatOnSave": true,
         "editor.snippetSuggestions": "none",
         "editor.tabSize": 8,
-        "editor.defaultFormatter": "ms-vscode.Go",
     },
     "[rust]": {
         "editor.formatOnSave": true,
-    }
+    },
 }
