@@ -46,7 +46,7 @@
     "go.vetOnSave": "off",
 
     "gopls": {
-        "staticheck": false,
+        "staticcheck": false,
         "usePlaceholders": true,
     },
 
