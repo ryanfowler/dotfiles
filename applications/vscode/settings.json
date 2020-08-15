@@ -35,11 +35,8 @@
 
     "git.autofetch": true,
 
-    "go.buildTags": "es6 es7 postgres redis",
+    "go.buildTags": "es6 es7 postgres redis videotests",
     "go.formatTool": "goimports",
-    "go.languageServerExperimentalFeatures": {
-        "format": false
-    },
     "go.lintFlags": [
         "--fast",
     ],
@@ -49,7 +46,7 @@
     "go.vetOnSave": "off",
 
     "gopls": {
-        "completeUnimported": true,
+        "staticheck": false,
         "usePlaceholders": true,
     },
 
@@ -86,7 +83,7 @@
         "statusBar.background": "#1A1A1A",
     },
     "workbench.editor.limit.enabled": true,
-    "workbench.editor.limit.value": 6,
+    "workbench.editor.limit.value": 8,
 
     "[go]": {
         "editor.codeActionsOnSave": {
@@ -96,7 +93,15 @@
         "editor.snippetSuggestions": "none",
         "editor.tabSize": 8,
     },
+
+    "[go.mod]": {
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": true,
+        },
+    },
+
     "[rust]": {
         "editor.formatOnSave": true,
-    },
+    }
 }
