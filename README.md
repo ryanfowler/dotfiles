@@ -7,7 +7,7 @@ My personal dotfiles
 To create all the necessary symlinks, run the script (requires nodejs):
 
 ```
-./run.sh
+./install.sh
 ```
 
 ### License
