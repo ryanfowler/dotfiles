@@ -1,3 +1,3 @@
 #!/bin/bash
 
-yarn && npx tsc && node dist/app.js
+npm install && npx tsc && node dist/app.js
