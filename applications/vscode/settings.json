@@ -1,6 +1,8 @@
 {
     "breadcrumbs.enabled": false,
 
+    "codespaces.accountProvider": "GitHub",
+
     "editor.codeActionsOnSave": {
         "source.fixAll.eslint": true
     },
@@ -14,6 +16,9 @@
     "editor.rulers": [
         80
     ],
+    "editor.tokenColorCustomizations": {
+        "comments": "#7e8a89",
+    },
 
     "eslint.packageManager": "yarn",
 
