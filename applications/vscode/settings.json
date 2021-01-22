@@ -20,7 +20,9 @@
         "comments": "#7e8a89",
     },
 
-    "eslint.packageManager": "yarn",
+    "eslint.packageManager": "npm",
+
+    "explorer.confirmDragAndDrop": false,
 
     "files.exclude":{
         "**/.git": true,
@@ -39,6 +41,7 @@
     },
 
     "git.autofetch": true,
+    "git.confirmSync": false,
 
     "go.buildTags": "es6 es7 postgres redis videotests",
     "go.formatTool": "goimports",
