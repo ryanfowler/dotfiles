@@ -43,12 +43,9 @@
     "git.autofetch": true,
     "git.confirmSync": false,
 
-    "go.buildTags": "es6 es7 postgres redis videotests",
+    "go.buildTags": "sandbox",
     "go.formatTool": "goimports",
-    "go.lintFlags": [
-        "--fast",
-    ],
-    "go.lintTool": "golangci-lint",
+    "go.lintTool": "staticcheck",
     "go.testOnSave": false,
     "go.useLanguageServer": true,
     "go.vetOnSave": "off",
