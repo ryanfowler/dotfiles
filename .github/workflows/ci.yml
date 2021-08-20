@@ -1,0 +1,16 @@
+name: Continuous Integration
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v2
+    - name: lint
+      run: npx eslint lib --ext .ts
+    - name: install
+      run: ./install.sh
