@@ -10,7 +10,9 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v2
+    - name: install
+      run: npm install
     - name: lint
       run: npx eslint lib --ext .ts
-    - name: install
+    - name: install-dotfiles
       run: ./install.sh
