@@ -82,7 +82,11 @@ async function processApp(dir: string): Promise<AppResult> {
       res.status = "ok";
     } catch (e) {
       res.status = "error";
-      res.message = e.message;
+      if (hasMessageField(e)) {
+        res.message = e.message;
+      } else {
+        res.message = "unknown error";
+      }
     } finally {
       results.push(res);
     }
@@ -142,4 +146,8 @@ async function parseAppConfig(dir: string): Promise<Rule[]> {
       destination,
     };
   });
+}
+
+function hasMessageField(err: unknown): err is { message: string } {
+  return typeof err === "object" && err !== null && "message" in err;
 }
