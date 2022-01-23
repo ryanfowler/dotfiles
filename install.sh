@@ -1,3 +1,3 @@
 #!/bin/bash
 
-npm install && npx tsc && node dist/app.js
+npm ci && npx tsc && node dist/app.js
