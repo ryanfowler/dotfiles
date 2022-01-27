@@ -1,17 +1,15 @@
 {
     "breadcrumbs.enabled": false,
 
-    "codespaces.accountProvider": "GitHub",
-
     "editor.codeActionsOnSave": {
         "source.fixAll.eslint": true
     },
     "editor.fontFamily": "'Source Code Pro', 'Ubuntu Mono', Menlo, Monaco, 'Courier New', monospace",
     "editor.fontSize": 15,
+    "editor.inlineSuggest.enabled": true,
     "editor.minimap.enabled": false,
     "editor.minimap.renderCharacters": false,
     "editor.minimap.showSlider": "always",
-    "editor.renderIndentGuides": false,
     "editor.renderWhitespace": "boundary",
     "editor.rulers": [
         80
@@ -47,13 +45,9 @@
     "go.formatTool": "goimports",
     "go.lintTool": "staticcheck",
     "go.testOnSave": false,
+    "go.toolsManagement.autoUpdate": true,
     "go.useLanguageServer": true,
     "go.vetOnSave": "off",
-
-    "gopls": {
-        "staticcheck": false,
-        "usePlaceholders": true,
-    },
 
     "javascript.updateImportsOnFileMove.enabled": "always",
 
@@ -73,7 +67,7 @@
         "**/vendor": true,
     },
 
-    "telemetry.enableTelemetry": false,
+    "telemetry.telemetryLevel": "off",
 
     "terminal.integrated.fontSize": 16,
     "terminal.integrated.lineHeight": 1.2,
@@ -84,9 +78,7 @@
     "window.titleBarStyle": "custom",
     "window.zoomLevel": 0,
 
-    "workbench.colorCustomizations": {
-        "statusBar.background": "#1A1A1A",
-    },
+    "workbench.colorTheme": "GitHub Dark Default",
     "workbench.editor.limit.enabled": true,
     "workbench.editor.limit.value": 8,
 
@@ -108,5 +100,5 @@
 
     "[rust]": {
         "editor.formatOnSave": true,
-    }
+    },
 }
