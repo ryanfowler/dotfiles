@@ -1,11 +1,14 @@
 {
     "breadcrumbs.enabled": false,
 
+    "diffEditor.ignoreTrimWhitespace": false,
+
     "editor.codeActionsOnSave": {
         "source.fixAll.eslint": true
     },
     "editor.fontFamily": "'Source Code Pro', 'Ubuntu Mono', Menlo, Monaco, 'Courier New', monospace",
     "editor.fontSize": 15,
+    "editor.guides.indentation": false,
     "editor.inlineSuggest.enabled": true,
     "editor.minimap.enabled": false,
     "editor.minimap.renderCharacters": false,
@@ -15,7 +18,7 @@
         80
     ],
     "editor.tokenColorCustomizations": {
-        "comments": "#7e8a89",
+        "comments": "#7e8a89"
     },
 
     "eslint.packageManager": "npm",
@@ -29,23 +32,27 @@
         "**/CVS": true,
         "**/.DS_Store": true,
         "**/*.coverprofile": true,
-        "**/*.out": true,
+        "**/*.out": true
     },
     "files.watcherExclude": {
         "**/.git/objects/**": true,
         "**/.git/subtree-cache/**": true,
         "**/node_modules/**": true,
-        "**/vendor/**": true,
+        "**/vendor/**": true
     },
 
     "git.autofetch": true,
     "git.confirmSync": false,
 
+    "github.copilot.enable": {
+        "*": true
+    },
+
     "go.buildTags": "sandbox",
     "go.formatTool": "goimports",
     "go.lintTool": "staticcheck",
     "go.testOnSave": false,
-    "go.toolsManagement.autoUpdate": true,
+    "go.toolsManagement.autoUpdate": false,
     "go.useLanguageServer": true,
     "go.vetOnSave": "off",
 
@@ -57,6 +64,8 @@
         ]
     },
 
+    "redhat.telemetry.enabled": false,
+
     "rust.build_on_save": true,
     "rust.clippy_preference": "on",
     "rust-client.channel": "stable",
@@ -64,7 +73,7 @@
     "search.exclude": {
         "**/bower_components": true,
         "**/node_modules": true,
-        "**/vendor": true,
+        "**/vendor": true
     },
 
     "telemetry.telemetryLevel": "off",
@@ -76,7 +85,6 @@
 
     "window.nativeTabs": true,
     "window.titleBarStyle": "custom",
-    "window.zoomLevel": 0,
 
     "workbench.colorTheme": "GitHub Dark Default",
     "workbench.editor.limit.enabled": true,
@@ -84,21 +92,21 @@
 
     "[go]": {
         "editor.codeActionsOnSave": {
-            "source.organizeImports": true,
+            "source.organizeImports": true
         },
         "editor.formatOnSave": true,
         "editor.snippetSuggestions": "none",
-        "editor.tabSize": 8,
+        "editor.tabSize": 8
     },
 
     "[go.mod]": {
         "editor.formatOnSave": true,
         "editor.codeActionsOnSave": {
-            "source.organizeImports": true,
-        },
+            "source.organizeImports": true
+        }
     },
 
     "[rust]": {
-        "editor.formatOnSave": true,
-    },
+        "editor.formatOnSave": true
+    }
 }
