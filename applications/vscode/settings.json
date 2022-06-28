@@ -45,7 +45,7 @@
     "git.confirmSync": false,
 
     "github.copilot.enable": {
-        "*": true
+        "*": false
     },
 
     "go.buildTags": "sandbox",
@@ -66,9 +66,7 @@
 
     "redhat.telemetry.enabled": false,
 
-    "rust.build_on_save": true,
-    "rust.clippy_preference": "on",
-    "rust-client.channel": "stable",
+    "rust-analyzer.checkOnSave.command": "clippy",
 
     "search.exclude": {
         "**/bower_components": true,
