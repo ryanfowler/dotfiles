@@ -9,6 +9,7 @@
     "editor.fontFamily": "'Source Code Pro', 'Ubuntu Mono', Menlo, Monaco, 'Courier New', monospace",
     "editor.fontSize": 15,
     "editor.guides.indentation": false,
+    "editor.inlayHints.enabled": "off",
     "editor.inlineSuggest.enabled": true,
     "editor.minimap.enabled": false,
     "editor.minimap.renderCharacters": false,
@@ -44,6 +45,9 @@
     "git.autofetch": true,
     "git.confirmSync": false,
 
+    "gitlens.codeLens.enabled": false,
+    "gitlens.currentLine.enabled": false,
+
     "github.copilot.enable": {
         "*": false
     },
@@ -52,7 +56,7 @@
     "go.formatTool": "goimports",
     "go.lintTool": "staticcheck",
     "go.testOnSave": false,
-    "go.toolsManagement.autoUpdate": false,
+    "go.toolsManagement.autoUpdate": true,
     "go.useLanguageServer": true,
     "go.vetOnSave": "off",
 
@@ -66,7 +70,10 @@
 
     "redhat.telemetry.enabled": false,
 
+    "remote.autoForwardPorts": false,
+
     "rust-analyzer.checkOnSave.command": "clippy",
+    "rust-analyzer.inlayHints.maxLength": 10,
 
     "search.exclude": {
         "**/bower_components": true,
