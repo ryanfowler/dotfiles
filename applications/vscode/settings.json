@@ -72,7 +72,9 @@
 
     "remote.autoForwardPorts": false,
 
+    "rust-analyzer.cargo.features": "all",
     "rust-analyzer.checkOnSave.command": "clippy",
+    "rust-analyzer.checkOnSave.features": "all",
     "rust-analyzer.inlayHints.maxLength": 10,
 
     "search.exclude": {
@@ -91,9 +93,10 @@
     "window.nativeTabs": true,
     "window.titleBarStyle": "custom",
 
-    "workbench.colorTheme": "GitHub Dark Default",
+    "workbench.colorTheme": "GitHub Dark Colorblind (Beta)",
     "workbench.editor.limit.enabled": true,
     "workbench.editor.limit.value": 8,
+    "workbench.editor.showTabs": true,
 
     "[go]": {
         "editor.codeActionsOnSave": {
