@@ -22,8 +22,6 @@
         "comments": "#7e8a89"
     },
 
-    "eslint.packageManager": "npm",
-
     "explorer.confirmDragAndDrop": false,
 
     "files.exclude":{
