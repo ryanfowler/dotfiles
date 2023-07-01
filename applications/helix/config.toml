@@ -1,0 +1,12 @@
+theme = "dark_plus"
+
+[editor]
+rulers = [80]
+
+[editor.file-picker]
+hidden = false
+
+[editor.whitespace.render]
+space = "all"
+tab = "all"
+newline = "none"
