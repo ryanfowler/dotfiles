@@ -1,4 +1,4 @@
-theme = "mellow"
+theme = "default"
 
 [editor]
 rulers = [80]
