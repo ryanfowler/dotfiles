@@ -19,4 +19,6 @@ rules:
 
   # vscode
   - src: "data/vscode/settings.json"
-    dst: "$HOME/Library/Application Support/Code/User/settings.json"
+    dst:
+      linux: "$HOME/.config/Code/User/settings.json"
+      macos: "$HOME/Library/Application Support/Code/User/settings.json"
