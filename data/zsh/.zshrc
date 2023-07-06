@@ -20,6 +20,9 @@ if [[ $(uname) == "Darwin" ]]; then
 fi
 alias ts=tailscale
 
+# llvm
+export PATH="$PATH:/opt/homebrew/opt/llvm/bin"
+
 # htop
 alias htop="TERM=xterm-256color htop"
 
