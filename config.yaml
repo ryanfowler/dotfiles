@@ -1,4 +1,8 @@
 rules:
+  # alacritty
+  - src: "data/alacritty/.alacritty.yml"
+    dst: "$HOME/.config/alacritty/alacritty.yml"
+
   # helix
   - src: "data/helix/config.toml"
     dst: "$HOME/.config/helix/config.toml"
