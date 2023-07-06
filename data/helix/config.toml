@@ -1,6 +1,7 @@
 theme = "default"
 
 [editor]
+idle-timeout = 100
 rulers = [80]
 true-color = true
 
