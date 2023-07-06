@@ -26,3 +26,7 @@ rules:
     dst:
       linux: "$HOME/.config/Code/User/settings.json"
       macos: "$HOME/Library/Application Support/Code/User/settings.json"
+
+  # zsh
+  - src: "data/zsh/.zshrc"
+    dst: "$HOME/.zshrc"
