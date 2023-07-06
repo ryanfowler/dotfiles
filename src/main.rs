@@ -53,9 +53,16 @@ fn process_rule(rule: &Rule) -> Result<()> {
 
     let dst = match &rule.dst {
         Destination::PathBuf(path) => path,
-        Destination::OsPathBufs(paths) => paths
-            .get(env::consts::OS)
-            .ok_or_else(|| Error::msg(format!("no matching os found: {:?}", &rule.src)))?,
+        Destination::OsPathBufs(paths) => match paths.get(env::consts::OS) {
+            Some(path) => path,
+            None => {
+                info(&format!(
+                    "skipping: no matching dst for os {}",
+                    env::consts::OS
+                ));
+                return Ok(());
+            }
+        },
     };
 
     // Use envsubst on paths.
