@@ -1,0 +1,22 @@
+rules:
+  # helix
+  - src: "data/helix/config.toml"
+    dst: "$HOME/.config/helix/config.toml"
+  - src: "data/helix/languages.toml"
+    dst: "$HOME/.config/helix/languages.toml"
+
+  # psql
+  - src: "data/psql/.psqlrc"
+    dst: "$HOME/.psqlrc"
+
+  # tmux
+  - src: "data/tmux/.tmux.conf"
+    dst: "$HOME/.tmux.conf"
+
+  # vim
+  - src: "data/vim/.vimrc"
+    dst: "$HOME/.vimrc"
+
+  # vscode
+  - src: "data/vscode/settings.json"
+    dst: "$HOME/Library/Application Support/Code/User/settings.json"

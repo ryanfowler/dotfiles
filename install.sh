@@ -1,3 +1,3 @@
 #!/bin/bash
 
-npm ci && npx tsc && node dist/app.js
+cargo run --release
