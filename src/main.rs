@@ -1,10 +1,12 @@
 use std::{
+    collections::BTreeMap,
+    env,
     ffi::OsString,
     fs,
     io::Write,
     os::unix::{self, prelude::OsStringExt},
     path::{Path, PathBuf},
-    process,
+    process::{self, exit},
 };
 
 use anyhow::{Error, Result};
@@ -18,12 +20,20 @@ struct Config {
 #[derive(Deserialize)]
 struct Rule {
     src: PathBuf,
-    dst: PathBuf,
+    dst: Destination,
+}
+
+#[derive(Deserialize)]
+#[serde(untagged)]
+enum Destination {
+    PathBuf(PathBuf),
+    OsPathBufs(BTreeMap<String, PathBuf>),
 }
 
 fn main() {
     if let Err(err) = run() {
         println!("error: {err}");
+        exit(1);
     }
 }
 
@@ -41,9 +51,16 @@ fn run() -> Result<()> {
 fn process_rule(rule: &Rule) -> Result<()> {
     info(&format!("processing: {:?}", &rule.src));
 
+    let dst = match &rule.dst {
+        Destination::PathBuf(path) => path,
+        Destination::OsPathBufs(paths) => paths
+            .get(env::consts::OS)
+            .ok_or_else(|| Error::msg(format!("no matching os found: {:?}", &rule.src)))?,
+    };
+
     // Use envsubst on paths.
     let src = fs::canonicalize(envsubst(&rule.src)?)?;
-    let dst = envsubst(&rule.dst)?;
+    let dst = envsubst(dst)?;
 
     // Create the containing directory for the "dst", if necessary.
     let dst_dir = dst
