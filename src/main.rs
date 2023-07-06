@@ -81,6 +81,9 @@ fn process_rule(rule: &Rule) -> Result<()> {
             }
             info(&format!("creating backup: {:?}", &dst_bak));
             fs::copy(&dst, &dst_bak)?;
+        } else if meta.is_symlink() && fs::read_link(&dst)? == src {
+            info(&format!("link already exists: {:?}\n", &dst));
+            return Ok(());
         }
         fs::remove_file(&dst)?;
         info("removed existing file");
