@@ -13,6 +13,10 @@ rules:
   - src: "data/psql/.psqlrc"
     dst: "$HOME/.psqlrc"
 
+  # starship
+  - src: "data/starship/starship.toml"
+    dst: "$HOME/.config/starship.toml"
+
   # tmux
   - src: "data/tmux/.tmux.conf"
     dst: "$HOME/.tmux.conf"
