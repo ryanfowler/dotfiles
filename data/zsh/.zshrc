@@ -34,10 +34,13 @@ autoload -U up-line-or-beginning-search
 autoload -U down-line-or-beginning-search
 zle -N up-line-or-beginning-search
 zle -N down-line-or-beginning-search
-bindkey "${terminfo[kcuu1]}" up-line-or-beginning-search # Up
-bindkey "${terminfo[kcud1]}" down-line-or-beginning-search # Down
-# bindkey "^[[A" up-line-or-beginning-search # Up
-# bindkey "^[[B" down-line-or-beginning-search # Down
+if [[ $(uname) == "Darwin" ]]; then
+  bindkey "^[[A" up-line-or-beginning-search # Up
+  bindkey "^[[B" down-line-or-beginning-search # Down
+else
+  bindkey "${terminfo[kcuu1]}" up-line-or-beginning-search # Up
+  bindkey "${terminfo[kcud1]}" down-line-or-beginning-search # Down
+fi
 
 # Run optional script
 if [[ -f "$HOME/.zshrc-custom" ]]; then
