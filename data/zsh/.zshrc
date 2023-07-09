@@ -29,7 +29,10 @@ alias htop="TERM=xterm-256color htop"
 # Helix
 export EDITOR=hx
 
-# Zsh History
+# zsh history
+export HISTFILE="$HOME/.zsh_history"
+export HISTSIZE=20000
+export SAVEHIST=$HISTSIZE
 autoload -U up-line-or-beginning-search
 autoload -U down-line-or-beginning-search
 zle -N up-line-or-beginning-search
@@ -37,9 +40,9 @@ zle -N down-line-or-beginning-search
 if [[ $(uname) == "Darwin" ]]; then
   bindkey "^[[A" up-line-or-beginning-search # Up
   bindkey "^[[B" down-line-or-beginning-search # Down
-else
-  bindkey "${terminfo[kcuu1]}" up-line-or-beginning-search # Up
-  bindkey "${terminfo[kcud1]}" down-line-or-beginning-search # Down
+elif [[ $(uname) == "Linux" ]]; then
+  bindkey "^[OA" up-line-or-beginning-search # Up
+  bindkey "^[OB" down-line-or-beginning-search # Down
 fi
 
 # Run optional script
