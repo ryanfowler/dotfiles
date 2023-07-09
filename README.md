@@ -4,13 +4,14 @@ My personal dotfiles
 
 ### Usage
 
-To create all the necessary symlinks, run the install script:
+To install all tooling and create the necessary symlinks for configuration, run the install script:
 
 ```
 ./install.sh
 ```
 
-If cargo is not installed locally, it will automatically install [rustup](https://rustup.rs/).
+Note: The script will automatically install [rustup](https://rustup.rs/) and
+[homebrew](https://brew.sh/) if they can't be found locally.
 
 ### License
 
