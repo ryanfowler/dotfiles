@@ -72,7 +72,7 @@ fn process_homebrew(config: &Homebrew) -> Result<()> {
     execute("brew", &args)?;
 
     if env::consts::OS == "macos" {
-        info("Installing hombrew casks");
+        info("Installing homebrew casks");
         let mut casks = config.casks.clone();
         let mut args = Vec::with_capacity(3 + config.casks.len());
         args.push("install".to_owned());
