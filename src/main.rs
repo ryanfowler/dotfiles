@@ -1,7 +1,7 @@
 use std::{
     collections::BTreeMap,
     env,
-    ffi::OsString,
+    ffi::{OsStr, OsString},
     fs,
     io::Write,
     os::unix::{self, prelude::OsStringExt},
@@ -14,7 +14,20 @@ use serde::Deserialize;
 
 #[derive(Deserialize)]
 struct Config {
+    homebrew: Homebrew,
+    npm: Npm,
     rules: Vec<Rule>,
+}
+
+#[derive(Deserialize)]
+struct Homebrew {
+    formulae: Vec<String>,
+    casks: Vec<String>,
+}
+
+#[derive(Deserialize)]
+struct Npm {
+    packages: Vec<String>,
 }
 
 #[derive(Deserialize)]
@@ -41,25 +54,65 @@ fn run() -> Result<()> {
     let raw_config = fs::read_to_string("./config.yaml")?;
     let config: Config = serde_yaml::from_str(&raw_config)?;
 
-    for rule in config.rules {
-        process_rule(&rule)?;
+    process_homebrew(&config.homebrew)?;
+    process_npm(&config.npm)?;
+    process_rules(&config.rules)?;
+
+    info("All done!");
+    Ok(())
+}
+
+fn process_homebrew(config: &Homebrew) -> Result<()> {
+    info("Installing homebrew formulae");
+    let mut formulae = config.formulae.clone();
+    let mut args = Vec::with_capacity(2 + config.formulae.len());
+    args.push("install".to_owned());
+    args.push("--quiet".to_owned());
+    args.append(&mut formulae);
+    execute("brew", &args)?;
+
+    if env::consts::OS == "macos" {
+        info("Installing hombrew casks");
+        let mut casks = config.casks.clone();
+        let mut args = Vec::with_capacity(3 + config.casks.len());
+        args.push("install".to_owned());
+        args.push("--quiet".to_owned());
+        args.push("--cask".to_owned());
+        args.append(&mut casks);
+        execute("brew", &args)?;
     }
 
     Ok(())
 }
 
+fn process_npm(config: &Npm) -> Result<()> {
+    info("Installing npm packages");
+    let mut packages = config.packages.clone();
+    let mut args = Vec::with_capacity(3 + packages.len());
+    args.push("install".to_owned());
+    args.push("--quiet".to_owned());
+    args.push("-g".to_owned());
+    args.append(&mut packages);
+    execute("npm", &args)
+}
+
+fn process_rules(rules: &[Rule]) -> Result<()> {
+    info("Linking configuration files");
+    for rule in rules {
+        process_rule(rule)?;
+    }
+    Ok(())
+}
+
 fn process_rule(rule: &Rule) -> Result<()> {
-    info(&format!("processing: {:?}", &rule.src));
+    println!("\n  processing: {:?}", &rule.src);
 
     let dst = match &rule.dst {
         Destination::PathBuf(path) => path,
         Destination::OsPathBufs(paths) => match paths.get(env::consts::OS) {
             Some(path) => path,
             None => {
-                info(&format!(
-                    "skipping: no matching dst for os {}",
-                    env::consts::OS
-                ));
+                println!("  skipping: no matching dst for os {}", env::consts::OS);
                 return Ok(());
             }
         },
@@ -86,21 +139,34 @@ fn process_rule(rule: &Rule) -> Result<()> {
             } else {
                 dst_bak.set_extension("bak");
             }
-            info(&format!("creating backup: {:?}", &dst_bak));
+            println!("  creating backup: {:?}", &dst_bak);
             fs::copy(&dst, &dst_bak)?;
         } else if meta.is_symlink() && fs::read_link(&dst)? == src {
-            info(&format!("link already exists: {:?}\n", &dst));
+            println!("  link already exists: {:?}", &dst);
             return Ok(());
         }
         fs::remove_file(&dst)?;
-        info("removed existing file");
+        println!("removed existing file");
     }
 
     // Create a new symlink.
-    info(&format!("creating link: {:?}", &dst));
+    println!("  creating link: {:?}", &dst);
     unix::fs::symlink(src, &dst)?;
-    println!();
     Ok(())
+}
+
+fn execute<S: AsRef<OsStr>>(cmd: &str, args: &[S]) -> Result<()> {
+    let status = process::Command::new(cmd)
+        .args(args)
+        .stdin(process::Stdio::inherit())
+        .stdout(process::Stdio::inherit())
+        .stderr(process::Stdio::inherit())
+        .status()?;
+    if status.success() {
+        Ok(())
+    } else {
+        Err(Error::msg(format!("received status: {}", status)))
+    }
 }
 
 fn envsubst(orig: &Path) -> Result<PathBuf> {
@@ -117,5 +183,5 @@ fn envsubst(orig: &Path) -> Result<PathBuf> {
 }
 
 fn info(msg: &str) {
-    println!("info: {msg}");
+    println!("\n===> {msg}");
 }

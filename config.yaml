@@ -1,3 +1,48 @@
+homebrew:
+  formulae:
+    - bash-language-server
+    - curl
+    - deno
+    - esbuild
+    - exa
+    - gh
+    - git
+    - go
+    - gopls
+    - helix
+    - htop
+    - jq
+    - llvm
+    - marksman
+    - ncurses
+    - neofetch
+    - neovim
+    - node
+    - parallel
+    - protobuf
+    - ripgrep
+    - rust-analyzer
+    - shellcheck
+    - sqlite
+    - starship
+    - staticcheck
+    - tmux
+    - typescript-language-server
+    - vips
+    - wget
+    - wrk
+    - yaml-language-server
+    - zig
+    - zls
+    - zsh
+  casks:
+    - alacritty
+    - font-source-code-pro
+
+npm:
+  packages:
+    - vscode-langservers-extracted
+
 rules:
   # alacritty
   - src: "data/alacritty/.alacritty.yml"
