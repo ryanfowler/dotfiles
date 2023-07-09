@@ -11,6 +11,7 @@ use std::{
 
 use anyhow::{Error, Result};
 use serde::Deserialize;
+use termcolor::{ColorChoice, ColorSpec, StandardStream, WriteColor};
 
 #[derive(Deserialize)]
 struct Config {
@@ -183,5 +184,8 @@ fn envsubst(orig: &Path) -> Result<PathBuf> {
 }
 
 fn info(msg: &str) {
-    println!("\n===> {msg}");
+    let mut stdout = StandardStream::stdout(ColorChoice::Auto);
+    _ = stdout.set_color(ColorSpec::new().set_bold(true));
+    _ = writeln!(&mut stdout, "\n===> {msg}");
+    _ = stdout.reset();
 }
