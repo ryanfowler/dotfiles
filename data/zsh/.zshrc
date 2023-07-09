@@ -27,7 +27,8 @@ export PATH="$PATH:/opt/homebrew/opt/llvm/bin"
 alias htop="TERM=xterm-256color htop"
 
 # Helix
-export EDITOR=hx
+export VISUAL=hx
+export EDITOR=$VISUAL
 
 # zsh history
 export HISTFILE="$HOME/.zsh_history"
