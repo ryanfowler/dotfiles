@@ -65,21 +65,18 @@ fn run() -> Result<()> {
 
 fn process_homebrew(config: &Homebrew) -> Result<()> {
     info("Installing homebrew formulae");
-    let mut formulae = config.formulae.clone();
-    let mut args = Vec::with_capacity(2 + config.formulae.len());
-    args.push("install".to_owned());
-    args.push("--quiet".to_owned());
-    args.append(&mut formulae);
+    let args = vec!["install".to_owned(), "--quiet".to_owned()];
+    let args: Vec<_> = args.iter().chain(&config.formulae).collect();
     execute("brew", &args)?;
 
     if env::consts::OS == "macos" {
         info("Installing homebrew casks");
-        let mut casks = config.casks.clone();
-        let mut args = Vec::with_capacity(3 + config.casks.len());
-        args.push("install".to_owned());
-        args.push("--quiet".to_owned());
-        args.push("--cask".to_owned());
-        args.append(&mut casks);
+        let args = vec![
+            "install".to_owned(),
+            "--quiet".to_owned(),
+            "--cask".to_owned(),
+        ];
+        let args: Vec<_> = args.iter().chain(&config.casks).collect();
         execute("brew", &args)?;
     }
 
@@ -88,12 +85,8 @@ fn process_homebrew(config: &Homebrew) -> Result<()> {
 
 fn process_npm(config: &Npm) -> Result<()> {
     info("Installing npm packages");
-    let mut packages = config.packages.clone();
-    let mut args = Vec::with_capacity(3 + packages.len());
-    args.push("install".to_owned());
-    args.push("--quiet".to_owned());
-    args.push("-g".to_owned());
-    args.append(&mut packages);
+    let args = vec!["install".to_owned(), "--quiet".to_owned(), "-g".to_owned()];
+    let args: Vec<_> = args.iter().chain(&config.packages).collect();
     execute("npm", &args)
 }
 
