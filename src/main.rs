@@ -159,7 +159,7 @@ fn execute<S: AsRef<OsStr>>(cmd: &str, args: &[S]) -> Result<()> {
     if status.success() {
         Ok(())
     } else {
-        Err(Error::msg(format!("received status: {}", status)))
+        Err(Error::msg(status.to_string()))
     }
 }
 
