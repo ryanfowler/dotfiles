@@ -5,6 +5,7 @@ homebrew:
     - deno
     - esbuild
     - exa
+    - fzf
     - gh
     - git
     - go
