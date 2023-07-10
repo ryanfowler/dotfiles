@@ -1,5 +1,5 @@
 # Rust
-. "$HOME/.cargo/env"
+export PATH="$HOME/.cargo/bin:$PATH"
 
 # Go
 export PATH="$HOME/go/bin:$PATH"
@@ -39,7 +39,7 @@ alias htop="TERM=xterm-256color htop"
 export VISUAL=hx
 export EDITOR=$VISUAL
 
-# zsh history
+# zsh history with arrow keys
 export HISTFILE="$HOME/.zsh_history"
 export HISTSIZE=20000
 export SAVEHIST=$HISTSIZE
@@ -54,6 +54,18 @@ elif [[ $(uname) == "Linux" ]]; then
   bindkey "^[OA" up-line-or-beginning-search # Up
   bindkey "^[OB" down-line-or-beginning-search # Down
 fi
+
+# zsh history search with ^r (via fzf)
+_history_search() {
+        output=$(fzf < ~/.zsh_history)
+        if [[ -n $output ]]; then
+                RBUFFER=""
+                LBUFFER=$output
+        fi
+        zle reset-prompt
+}
+zle -N _search_widget _history_search
+bindkey '^r' _search_widget
 
 # Run optional script
 if [[ -f "$HOME/.zshrc-custom" ]]; then
