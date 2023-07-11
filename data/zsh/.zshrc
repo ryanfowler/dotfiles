@@ -39,6 +39,9 @@ alias htop="TERM=xterm-256color htop"
 export VISUAL=hx
 export EDITOR=$VISUAL
 
+# Share zsh history immediately
+setopt INC_APPEND_HISTORY
+
 # zsh history with arrow keys
 export HISTFILE="$HOME/.zsh_history"
 export HISTSIZE=20000
