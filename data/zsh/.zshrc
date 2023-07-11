@@ -57,12 +57,12 @@ fi
 
 # zsh history search with ^r (via fzf)
 _history_search() {
-        output=$(tac ~/.zsh_history | fzf)
-        if [[ -n $output ]]; then
-                RBUFFER=""
-                LBUFFER=$output
-        fi
-        zle reset-prompt
+  output=$(tac ~/.zsh_history | fzf)
+  if [[ -n $output ]]; then
+    RBUFFER=""
+    LBUFFER=$output
+  fi
+  zle reset-prompt
 }
 zle -N _search_widget _history_search
 bindkey '^r' _search_widget
