@@ -57,7 +57,7 @@ fi
 
 # zsh history search with ^r (via fzf)
 _history_search() {
-        output=$(fzf < ~/.zsh_history)
+        output=$(nl ~/.zsh_history | sort -nr | cut -f 2- | fzf)
         if [[ -n $output ]]; then
                 RBUFFER=""
                 LBUFFER=$output
