@@ -1,6 +1,7 @@
 homebrew:
   formulae:
     - bash-language-server
+    - coreutils
     - curl
     - deno
     - esbuild
