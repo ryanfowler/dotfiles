@@ -8,3 +8,9 @@ name = "rust"
 
 [language.config.check]
 command = "clippy"
+
+[[language]]
+name = "python"
+scope = "source.python"
+language-server = { command = "ruff-lsp" }
+config = { settings = { args = [] } }
