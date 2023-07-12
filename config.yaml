@@ -23,6 +23,8 @@ homebrew:
     - parallel
     - protobuf
     - ripgrep
+    - ruff
+    - ruff-lsp
     - rust-analyzer
     - shellcheck
     - sqlite
