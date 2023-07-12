@@ -15,6 +15,7 @@ homebrew:
     - htop
     - jq
     - llvm
+    - lua-language-server
     - marksman
     - ncurses
     - neofetch
