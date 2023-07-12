@@ -46,6 +46,7 @@ homebrew:
 
 npm:
   packages:
+    - svelte-language-server
     - vscode-langservers-extracted
 
 rules:
