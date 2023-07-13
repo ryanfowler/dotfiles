@@ -70,6 +70,11 @@ _history_search() {
 zle -N _search_widget _history_search
 bindkey '^r' _search_widget
 
+# zsh completions
+FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+autoload -Uz compinit
+compinit
+
 # Run optional script
 if [[ -f "$HOME/.zshrc-custom" ]]; then
   . "$HOME/.zshrc-custom"
