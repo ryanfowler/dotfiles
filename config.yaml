@@ -40,6 +40,7 @@ homebrew:
     - zig
     - zls
     - zsh
+    - zsh-completions
   casks:
     - alacritty
     - font-source-code-pro
