@@ -1,4 +1,4 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
-# Allow only 200ms to run commands
-command_timeout = 200
+# Allow commands 100ms to run.
+command_timeout = 100
