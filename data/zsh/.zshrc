@@ -7,6 +7,7 @@ export PATH="$HOME/go/bin:$PATH"
 # Homebrew
 if [[ $(uname) == "Darwin" ]]; then
   export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH"
+  export PATH="/opt/homebrew/opt/curl/bin:$PATH"
 elif [[ $(uname) == "Linux" ]]; then
   export HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"
   export HOMEBREW_CELLAR="/home/linuxbrew/.linuxbrew/Cellar"
@@ -17,6 +18,7 @@ elif [[ $(uname) == "Linux" ]]; then
 fi
 
 # Starship
+export STARSHIP_LOG=error
 eval "$(starship init zsh)"
 
 # Exa
