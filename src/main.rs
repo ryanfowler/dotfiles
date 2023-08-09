@@ -85,7 +85,13 @@ fn process_homebrew(config: &Homebrew) -> Result<()> {
 
 fn process_npm(config: &Npm) -> Result<()> {
     info("Installing npm packages");
-    let args = vec!["install".to_owned(), "--quiet".to_owned(), "-g".to_owned()];
+    let args = vec![
+        "install".to_owned(),
+        "--quiet".to_owned(),
+        "--global".to_owned(),
+        "--no-fund".to_owned(),
+        "--no-update-notifier".to_owned(),
+    ];
     let args: Vec<_> = args.iter().chain(&config.packages).collect();
     execute("npm", &args)
 }
