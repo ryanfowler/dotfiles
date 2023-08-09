@@ -11,7 +11,9 @@ function print_bold {
 print_bold "===> Updating homebrew"
 brew update
 brew upgrade
-brew upgrade --casks
+if [[ $(uname) == "Darwin" ]]; then
+  brew upgrade --casks
+fi
 
 print_bold "\n===> Updating rust"
 rustup -q update
