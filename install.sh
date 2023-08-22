@@ -11,4 +11,4 @@ if ! command -v cargo &> /dev/null; then
     curl https://sh.rustup.rs -sSf | sh -s -- -y
 fi
 
-cargo run --quiet --release
+cargo run --quiet
