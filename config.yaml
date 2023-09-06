@@ -1,6 +1,7 @@
 homebrew:
   formulae:
     - bash-language-server
+    - bat
     - coreutils
     - curl
     - deno
