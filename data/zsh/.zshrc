@@ -22,8 +22,8 @@ export STARSHIP_LOG=error
 eval "$(starship init zsh)"
 
 # Exa
-alias ls=exa
-alias la="exa -la"
+alias ls=eza
+alias la="eza -la"
 
 # Tailscale
 if [[ $(uname) == "Darwin" ]]; then

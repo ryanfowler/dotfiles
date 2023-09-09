@@ -6,7 +6,7 @@ homebrew:
     - curl
     - deno
     - esbuild
-    - exa
+    - eza
     - fzf
     - gh
     - git
