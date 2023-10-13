@@ -5,6 +5,7 @@ export PATH="$HOME/.cargo/bin:$PATH"
 export PATH="$HOME/go/bin:$PATH"
 
 # Homebrew
+export HOMEBREW_NO_ANALYTICS=1
 if [[ $(uname) == "Darwin" ]]; then
   export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH"
   export PATH="/opt/homebrew/opt/curl/bin:$PATH"
