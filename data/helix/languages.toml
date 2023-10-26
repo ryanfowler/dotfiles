@@ -3,14 +3,10 @@ name = "go"
 indent = { tab-width = 8, unit = "\t" }
 formatter = { command = "goimports" }
 
-[[language]]
-name = "rust"
-
-[language.config.check]
+[[language-server.rust-analyzer.config.check]]
 command = "clippy"
 
 [[language]]
 name = "python"
 scope = "source.python"
-language-server = { command = "ruff-lsp" }
-config = { settings = { args = [] } }
+language-servers = [ "ruff-lsp" ]
