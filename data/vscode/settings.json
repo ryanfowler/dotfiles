@@ -1,118 +1,96 @@
 {
-    "breadcrumbs.enabled": false,
-
-    "diffEditor.ignoreTrimWhitespace": false,
-
+  "breadcrumbs.enabled": false,
+  "diffEditor.ignoreTrimWhitespace": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "editor.fontFamily": "'Monaspace Neon', 'Source Code Pro', 'Ubuntu Mono', Menlo, Monaco, 'Courier New', monospace",
+  "editor.fontSize": 15,
+  "editor.guides.indentation": false,
+  "editor.inlayHints.enabled": "off",
+  "editor.inlineSuggest.enabled": true,
+  "editor.minimap.enabled": false,
+  "editor.minimap.renderCharacters": false,
+  "editor.minimap.showSlider": "always",
+  "editor.renderWhitespace": "boundary",
+  "editor.rulers": [
+    80
+  ],
+  "editor.tokenColorCustomizations": {
+    "comments": "#7e8a89"
+  },
+  "explorer.confirmDragAndDrop": false,
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/*.coverprofile": true,
+    "**/*.out": true
+  },
+  "files.watcherExclude": {
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/node_modules/**": true,
+    "**/vendor/**": true
+  },
+  "git.autofetch": true,
+  "git.confirmSync": false,
+  "gitlens.codeLens.enabled": false,
+  "gitlens.currentLine.enabled": false,
+  "github.copilot.enable": {
+    "*": false
+  },
+  "go.buildTags": "sandbox",
+  "go.formatTool": "goimports",
+  "go.lintTool": "staticcheck",
+  "go.testOnSave": false,
+  "go.toolsManagement.autoUpdate": true,
+  "go.useLanguageServer": true,
+  "go.vetOnSave": "off",
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "protoc": {
+    "options": [
+      "--proto_path=${env.GOPATH}/src"
+    ]
+  },
+  "redhat.telemetry.enabled": false,
+  "remote.autoForwardPorts": false,
+  "rust-analyzer.cargo.features": "all",
+  "rust-analyzer.checkOnSave.command": "clippy",
+  "rust-analyzer.checkOnSave.features": "all",
+  "rust-analyzer.inlayHints.maxLength": 10,
+  "search.exclude": {
+    "**/bower_components": true,
+    "**/node_modules": true,
+    "**/vendor": true
+  },
+  "telemetry.telemetryLevel": "off",
+  "terminal.integrated.fontSize": 16,
+  "terminal.integrated.lineHeight": 1.2,
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "window.nativeTabs": true,
+  "window.titleBarStyle": "custom",
+  "workbench.colorTheme": "GitHub Dark Colorblind (Beta)",
+  "workbench.editor.limit.enabled": true,
+  "workbench.editor.limit.value": 8,
+  "workbench.editor.showTabs": "multiple",
+  "[go]": {
     "editor.codeActionsOnSave": {
-        "source.fixAll.eslint": true
+      "source.organizeImports": true
     },
-    "editor.fontFamily": "'Source Code Pro', 'Ubuntu Mono', Menlo, Monaco, 'Courier New', monospace",
-    "editor.fontSize": 15,
-    "editor.guides.indentation": false,
-    "editor.inlayHints.enabled": "off",
-    "editor.inlineSuggest.enabled": true,
-    "editor.minimap.enabled": false,
-    "editor.minimap.renderCharacters": false,
-    "editor.minimap.showSlider": "always",
-    "editor.renderWhitespace": "boundary",
-    "editor.rulers": [
-        80
-    ],
-    "editor.tokenColorCustomizations": {
-        "comments": "#7e8a89"
-    },
-
-    "explorer.confirmDragAndDrop": false,
-
-    "files.exclude":{
-        "**/.git": true,
-        "**/.svn": true,
-        "**/.hg": true,
-        "**/CVS": true,
-        "**/.DS_Store": true,
-        "**/*.coverprofile": true,
-        "**/*.out": true
-    },
-    "files.watcherExclude": {
-        "**/.git/objects/**": true,
-        "**/.git/subtree-cache/**": true,
-        "**/node_modules/**": true,
-        "**/vendor/**": true
-    },
-
-    "git.autofetch": true,
-    "git.confirmSync": false,
-
-    "gitlens.codeLens.enabled": false,
-    "gitlens.currentLine.enabled": false,
-
-    "github.copilot.enable": {
-        "*": false
-    },
-
-    "go.buildTags": "sandbox",
-    "go.formatTool": "goimports",
-    "go.lintTool": "staticcheck",
-    "go.testOnSave": false,
-    "go.toolsManagement.autoUpdate": true,
-    "go.useLanguageServer": true,
-    "go.vetOnSave": "off",
-
-    "javascript.updateImportsOnFileMove.enabled": "always",
-
-    "protoc": {
-        "options": [
-            "--proto_path=${env.GOPATH}/src"
-        ]
-    },
-
-    "redhat.telemetry.enabled": false,
-
-    "remote.autoForwardPorts": false,
-
-    "rust-analyzer.cargo.features": "all",
-    "rust-analyzer.checkOnSave.command": "clippy",
-    "rust-analyzer.checkOnSave.features": "all",
-    "rust-analyzer.inlayHints.maxLength": 10,
-
-    "search.exclude": {
-        "**/bower_components": true,
-        "**/node_modules": true,
-        "**/vendor": true
-    },
-
-    "telemetry.telemetryLevel": "off",
-
-    "terminal.integrated.fontSize": 16,
-    "terminal.integrated.lineHeight": 1.2,
-
-    "typescript.updateImportsOnFileMove.enabled": "always",
-
-    "window.nativeTabs": true,
-    "window.titleBarStyle": "custom",
-
-    "workbench.colorTheme": "GitHub Dark Colorblind (Beta)",
-    "workbench.editor.limit.enabled": true,
-    "workbench.editor.limit.value": 8,
-    "workbench.editor.showTabs": true,
-
-    "[go]": {
-        "editor.codeActionsOnSave": {
-            "source.organizeImports": true
-        },
-        "editor.formatOnSave": true,
-        "editor.snippetSuggestions": "none",
-        "editor.tabSize": 8
-    },
-
-    "[go.mod]": {
-        "editor.formatOnSave": true,
-        "editor.codeActionsOnSave": {
-            "source.organizeImports": true
-        }
-    },
-
-    "[rust]": {
-        "editor.formatOnSave": true
+    "editor.formatOnSave": true,
+    "editor.snippetSuggestions": "none",
+    "editor.tabSize": 8
+  },
+  "[go.mod]": {
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": true
     }
+  },
+  "[rust]": {
+    "editor.formatOnSave": true
+  }
 }
