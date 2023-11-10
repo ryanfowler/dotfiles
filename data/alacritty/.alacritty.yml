@@ -1,14 +1,14 @@
 font:
   normal:
-    family: "Source Code Pro"
+    family: "Monaspace Neon"
     style: Regular
   bold:
-    family: "Source Code Pro"
+    family: "Monaspace Neon"
     style: Bold
   italic:
-    family: "Source Code Pro"
+    family: "Monaspace Neon"
     style: Italic
   bold_italic:
-    family: "Source Code Pro"
+    family: "Monaspace Neon"
     style: Bold Italic
   size: 16
