@@ -146,7 +146,7 @@ fn process_rule(rule: &Rule) -> Result<()> {
             return Ok(());
         }
         fs::remove_file(&dst)?;
-        println!("removed existing file");
+        println!("  removed existing file");
     }
 
     // Create a new symlink.
