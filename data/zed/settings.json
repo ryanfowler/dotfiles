@@ -1,0 +1,16 @@
+{
+  "buffer_font_family": "Monaspace Neon",
+  "buffer_font_size": 15,
+  "cursor_blink": false,
+  "language_overrides": {
+    "Go": {
+      "tab_size": 8
+    }
+  },
+  "show_whitespaces": "all",
+  "telemetry": {
+    "diagnostics": true
+  },
+  "ui_font_size": 16,
+  "vim_mode": true
+}
