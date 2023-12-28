@@ -1,0 +1,21 @@
+[font]
+size = 15
+
+[font.bold]
+family = "Monaspace Neon"
+style = "Bold"
+
+[font.bold_italic]
+family = "Monaspace Neon"
+style = "Bold Italic"
+
+[font.italic]
+family = "Monaspace Neon"
+style = "Italic"
+
+[font.normal]
+family = "Monaspace Neon"
+style = "Regular"
+
+[window]
+option_as_alt = "Both"

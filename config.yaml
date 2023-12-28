@@ -53,8 +53,8 @@ npm:
 
 rules:
   # alacritty
-  - src: "data/alacritty/.alacritty.yml"
-    dst: "$HOME/.config/alacritty/alacritty.yml"
+  - src: "data/alacritty/alacritty.toml"
+    dst: "$HOME/.config/alacritty/alacritty.toml"
 
   # helix
   - src: "data/helix/config.toml"
