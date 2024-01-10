@@ -7,4 +7,4 @@ edition = "2021"
 anyhow = { version = "1.0.79" }
 serde = { version = "1.0.195", features = ["derive"] }
 serde_yaml = { version = "0.9.30" }
-termcolor = { version = "1.4.0" }
+termcolor = { version = "1.4.1" }
