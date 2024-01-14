@@ -3,6 +3,15 @@
 # Allow commands 100ms to run.
 command_timeout = 100
 
+[git_status]
+disabled = true
+
+[docker_context]
+disabled = true
+
+[package]
+disabled = true
+
 # No Runtime Versions Preset
 [bun]
 format = "via [$symbol]($style)"
