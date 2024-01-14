@@ -1,3 +1,5 @@
+# zshrc
+
 # Rust
 export PATH="$HOME/.cargo/bin:$PATH"
 
@@ -6,10 +8,10 @@ export PATH="$HOME/go/bin:$PATH"
 
 # Homebrew
 export HOMEBREW_NO_ANALYTICS=1
-if [[ $(uname) == "Darwin" ]]; then
+if [[ $OSTYPE = darwin* ]]; then
   export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH"
   export PATH="/opt/homebrew/opt/curl/bin:$PATH"
-elif [[ $(uname) == "Linux" ]]; then
+elif [[ $OSTYPE = linux* ]]; then
   export HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"
   export HOMEBREW_CELLAR="/home/linuxbrew/.linuxbrew/Cellar"
   export HOMEBREW_REPOSITORY="/home/linuxbrew/.linuxbrew/Homebrew"
@@ -27,7 +29,7 @@ alias ls=eza
 alias la="eza -la"
 
 # Tailscale
-if [[ $(uname) == "Darwin" ]]; then
+if [[ $OSTYPE = darwin* ]]; then
   alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
 fi
 alias ts=tailscale
@@ -53,10 +55,10 @@ autoload -U up-line-or-beginning-search
 autoload -U down-line-or-beginning-search
 zle -N up-line-or-beginning-search
 zle -N down-line-or-beginning-search
-if [[ $(uname) == "Darwin" ]]; then
+if [[ $OSTYPE = darwin* ]]; then
   bindkey "^[[A" up-line-or-beginning-search # Up
   bindkey "^[[B" down-line-or-beginning-search # Down
-elif [[ $(uname) == "Linux" ]]; then
+elif [[ $OSTYPE = linux* ]]; then
   bindkey "^[OA" up-line-or-beginning-search # Up
   bindkey "^[OB" down-line-or-beginning-search # Down
 fi
@@ -74,11 +76,12 @@ zle -N _search_widget _history_search
 bindkey '^r' _search_widget
 
 # zsh completions
-FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
-autoload -Uz compinit
-compinit
+# FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+# autoload -Uz compinit
+# compinit
 
 # Run optional script
-if [[ -f "$HOME/.zshrc-custom" ]]; then
-  . "$HOME/.zshrc-custom"
+local private="${HOME}/.zshrc-custom"
+if [[ -e ${private} ]]; then
+  . ${private}
 fi
