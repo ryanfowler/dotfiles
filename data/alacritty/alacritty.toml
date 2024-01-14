@@ -2,19 +2,19 @@
 size = 15
 
 [font.bold]
-family = "Monaspace Neon"
+family = "Source Code Pro"
 style = "Bold"
 
 [font.bold_italic]
-family = "Monaspace Neon"
+family = "Source Code Pro"
 style = "Bold Italic"
 
 [font.italic]
-family = "Monaspace Neon"
+family = "Source Code Pro"
 style = "Italic"
 
 [font.normal]
-family = "Monaspace Neon"
+family = "Source Code Pro"
 style = "Regular"
 
 [window]
