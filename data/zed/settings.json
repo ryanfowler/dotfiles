@@ -20,6 +20,10 @@
   "telemetry": {
     "diagnostics": true
   },
+  "terminal": {
+    "font_family": "Source Code Pro",
+    "font_size": 14
+  },
   "ui_font_family": "Monaspace Neon",
   "ui_font_size": 15,
   "vim_mode": true
