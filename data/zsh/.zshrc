@@ -76,9 +76,12 @@ zle -N _search_widget _history_search
 bindkey '^r' _search_widget
 
 # zsh completions
-# FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
-# autoload -Uz compinit
-# compinit
+FPATH=/opt/homebrew/share/zsh-completions:$FPATH
+autoload -Uz compinit
+for dump in ~/.zcompdump(N.mh+24); do
+  compinit
+done
+compinit -C
 
 # Run optional script
 local private="${HOME}/.zshrc-custom"
