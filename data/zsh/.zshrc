@@ -40,8 +40,8 @@ export PATH="$PATH:/opt/homebrew/opt/llvm/bin"
 # htop
 alias htop="TERM=xterm-256color htop"
 
-# Helix
-export VISUAL=hx
+# Set default editor
+export VISUAL=nvim
 export EDITOR=$VISUAL
 
 # Share zsh history immediately

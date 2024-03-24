@@ -62,6 +62,10 @@ rules:
   - src: "data/helix/languages.toml"
     dst: "$HOME/.config/helix/languages.toml"
 
+  # neovim
+  - src: "data/nvim/init.lua"
+    dst: "$HOME/.config/nvim/init.lua"
+
   # psql
   - src: "data/psql/.psqlrc"
     dst: "$HOME/.psqlrc"
