@@ -6,5 +6,5 @@ edition = "2021"
 [dependencies]
 anyhow = { version = "1.0.81" }
 serde = { version = "1.0.197", features = ["derive"] }
-serde_yaml = { version = "0.9.33" }
+serde_yaml = { version = "0.9.34" }
 termcolor = { version = "1.4.1" }
