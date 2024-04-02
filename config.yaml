@@ -7,6 +7,7 @@ homebrew:
     - deno
     - esbuild
     - eza
+    - fd
     - fzf
     - gh
     - git
