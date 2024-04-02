@@ -281,6 +281,12 @@ require("lazy").setup({
 				-- pickers = {}
 				defaults = {
 					file_ignore_patterns = { "^vendor/" },
+					layout_config = {
+						horizontal = {
+							prompt_position = "top",
+						},
+					},
+					sorting_strategy = "ascending",
 				},
 				extensions = {
 					["ui-select"] = {
