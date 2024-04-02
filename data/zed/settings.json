@@ -8,6 +8,11 @@
     }
   },
   "lsp": {
+    // "gopls": {
+    //   "initialization_options": {
+    //     "buildFlags": ["-tags=sandbox,integration"]
+    //   }
+    // },
     "rust-analyzer": {
       "initialization_options": {
         "checkOnSave": {
