@@ -293,6 +293,12 @@ require("lazy").setup({
 						require("telescope.themes").get_dropdown(),
 					},
 				},
+				pickers = {
+					find_files = {
+						file_ignore_patterns = { ".git", "vendor" },
+						hidden = true,
+					},
+				},
 			})
 
 			-- Enable Telescope extensions if they are installed
@@ -314,7 +320,7 @@ require("lazy").setup({
 			vim.keymap.set(
 				"n",
 				"<space>fb",
-				":Telescope file_browser path=%:p:h select_buffer=true<CR>",
+				":Telescope file_browser path=%:p:h hidden=true select_buffer=true<CR>",
 				{ desc = "[F]ile [B]rowser" }
 			)
 
