@@ -241,6 +241,8 @@ require("lazy").setup({
 			},
 			{ "nvim-telescope/telescope-ui-select.nvim" },
 
+			{ "nvim-telescope/telescope-file-browser.nvim" },
+
 			-- Useful for getting pretty icons, but requires a Nerd Font.
 			{ "nvim-tree/nvim-web-devicons", enabled = vim.g.have_nerd_font },
 		},
@@ -302,6 +304,12 @@ require("lazy").setup({
 			vim.keymap.set("n", "<leader>sr", builtin.resume, { desc = "[S]earch [R]esume" })
 			vim.keymap.set("n", "<leader>s.", builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
 			vim.keymap.set("n", "<leader><leader>", builtin.buffers, { desc = "[ ] Find existing buffers" })
+			vim.keymap.set(
+				"n",
+				"<space>fb",
+				":Telescope file_browser path=%:p:h select_buffer=true<CR>",
+				{ desc = "[F]ile [B]rowser" }
+			)
 
 			-- Slightly advanced example of overriding default behavior and theme
 			vim.keymap.set("n", "<leader>/", function()
@@ -472,7 +480,7 @@ require("lazy").setup({
 				gopls = {
 					settings = {
 						gopls = {
-							gofumpt = true,
+							-- gofumpt = true,
 							staticcheck = true,
 						},
 					},
@@ -488,6 +496,7 @@ require("lazy").setup({
 				-- But for many setups, the LSP (`tsserver`) will work just fine
 				-- tsserver = {},
 				--
+				ruff_lsp = {},
 
 				lua_ls = {
 					-- cmd = {...},
