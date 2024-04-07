@@ -324,10 +324,10 @@ require("lazy").setup({
 			require("gitlinker").setup({
 				router = {
 					browse = {
-						["^github%.internal%.digitalocean%.com"] = require("gitlinker.routers").github_browse,
+						["^github%..*%.com"] = require("gitlinker.routers").github_browse,
 					},
 					blame = {
-						["^github%.internal%.digitalocean%.com"] = require("gitlinker.routers").github_blame,
+						["^github%..*%.com"] = require("gitlinker.routers").github_blame,
 					},
 				},
 			})
