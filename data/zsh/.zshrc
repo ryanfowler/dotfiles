@@ -44,6 +44,9 @@ alias htop="TERM=xterm-256color htop"
 export VISUAL=nvim
 export EDITOR=$VISUAL
 
+# Use emacs?! mode for sensible keybindings
+bindkey -e
+
 # Share zsh history immediately
 setopt INC_APPEND_HISTORY
 
