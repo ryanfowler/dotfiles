@@ -461,7 +461,15 @@ require("lazy").setup({
 					},
 				},
 				ruff_lsp = {},
-				rust_analyzer = {},
+				rust_analyzer = {
+					settings = {
+						["rust-analyzer"] = {
+							checkOnSave = {
+								command = "clippy",
+							},
+						},
+					},
+				},
 				zls = {},
 			}
 
