@@ -744,6 +744,9 @@ require("lazy").setup({
 					["cmp.entry.get_documentation"] = true, -- requires hrsh7th/nvim-cmp
 				},
 			},
+			messages = {
+				view = "mini",
+			},
 		},
 		dependencies = {
 			"MunifTanjim/nui.nvim",
