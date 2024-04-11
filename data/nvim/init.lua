@@ -442,20 +442,15 @@ require("lazy").setup({
 			--  - settings (table): Override the default settings passed when initializing the server.
 			--        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
 			local servers = {
-				-- clangd = {},
 				gopls = {
 					settings = {
 						gopls = {
+							buildFlags = { "-tags=integration sandbox" },
 							-- gofumpt = true,
 							staticcheck = true,
 						},
 					},
 				},
-				-- pyright = {},
-				rust_analyzer = {},
-				zls = {},
-				ruff_lsp = {},
-
 				lua_ls = {
 					settings = {
 						Lua = {
@@ -465,6 +460,9 @@ require("lazy").setup({
 						},
 					},
 				},
+				ruff_lsp = {},
+				rust_analyzer = {},
+				zls = {},
 			}
 
 			-- Ensure the servers and tools above are installed
