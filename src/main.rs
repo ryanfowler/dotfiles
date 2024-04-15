@@ -65,13 +65,13 @@ fn run() -> Result<()> {
 
 fn process_homebrew(config: &Homebrew) -> Result<()> {
     info("Installing homebrew formulae");
-    let args = vec!["install".to_owned(), "--quiet".to_owned()];
+    let args = ["install".to_owned(), "--quiet".to_owned()];
     let args: Vec<_> = args.iter().chain(&config.formulae).collect();
     execute("brew", &args)?;
 
     if env::consts::OS == "macos" {
         info("Installing homebrew casks");
-        let args = vec![
+        let args = [
             "install".to_owned(),
             "--quiet".to_owned(),
             "--cask".to_owned(),
@@ -85,7 +85,7 @@ fn process_homebrew(config: &Homebrew) -> Result<()> {
 
 fn process_npm(config: &Npm) -> Result<()> {
     info("Installing npm packages");
-    let args = vec![
+    let args = [
         "install".to_owned(),
         "--quiet".to_owned(),
         "--global".to_owned(),
