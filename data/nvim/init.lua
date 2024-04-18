@@ -78,6 +78,9 @@ vim.keymap.set("n", "<BS>", "<C-^>", { desc = "Jump to last buffer" })
 vim.keymap.set("n", "<C-u>", "<C-u>zz")
 vim.keymap.set("n", "<C-d>", "<C-d>zz")
 
+-- Disable netrw in favour of telescope file browser.
+vim.g.loaded_netrwPlugin = 0
+
 -- Diagnostic keymaps
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous [D]iagnostic message" })
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next [D]iagnostic message" })
