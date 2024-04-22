@@ -766,7 +766,7 @@ require("lazy").setup({
 		},
 		dependencies = {
 			"MunifTanjim/nui.nvim",
-			"rcarriga/nvim-notify",
+			-- "rcarriga/nvim-notify",
 		},
 	},
 	-- The following two comments only work if you have downloaded the kickstart repo, not just copy pasted the
