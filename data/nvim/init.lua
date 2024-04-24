@@ -236,8 +236,16 @@ require("lazy").setup({
 				},
 				pickers = {
 					find_files = {
-						file_ignore_patterns = { "^.git/", "^vendor/" },
-						hidden = true,
+						find_command = {
+							"fd",
+							"--type",
+							"file",
+							"--exclude",
+							"/vendor/",
+							"--hidden",
+							"--color",
+							"never",
+						},
 					},
 				},
 			})
