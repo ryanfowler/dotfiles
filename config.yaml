@@ -45,8 +45,8 @@ homebrew:
     - zsh-completions
   casks:
     - alacritty
+    - font-monaspace-nerd-font
     - font-sauce-code-pro-nerd-font
-    - font-source-code-pro
 
 npm:
   packages:

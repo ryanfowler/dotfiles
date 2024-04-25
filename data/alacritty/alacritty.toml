@@ -1,20 +1,20 @@
 [font]
-size = 16
+size = 15
 
 [font.bold]
-family = "SauceCodePro Nerd Font"
+family = "MonaspiceNe Nerd Font"
 style = "Bold"
 
 [font.bold_italic]
-family = "SauceCodePro Nerd Font"
+family = "MonaspiceNe Nerd Font"
 style = "Bold Italic"
 
 [font.italic]
-family = "SauceCodePro Nerd Font"
+family = "MonaspiceNe Nerd Font"
 style = "Italic"
 
 [font.normal]
-family = "SauceCodePro Nerd Font"
+family = "MonaspiceNe Nerd Font"
 style = "Regular"
 
 [window]
