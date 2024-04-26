@@ -47,6 +47,8 @@ homebrew:
     - alacritty
     - font-monaspace-nerd-font
     - font-sauce-code-pro-nerd-font
+  taps:
+    - homebrew/cask-fonts
 
 npm:
   packages:
