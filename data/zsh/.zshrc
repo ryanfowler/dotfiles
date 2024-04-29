@@ -66,17 +66,31 @@ elif [[ $OSTYPE = linux* ]]; then
   bindkey "^[OB" down-line-or-beginning-search # Down
 fi
 
-# zsh history search with ^r (via fzf)
-_history_search() {
-  output=$(tac ~/.zsh_history | fzf)
-  if [[ -n $output ]]; then
-    RBUFFER=""
-    LBUFFER=$output
-  fi
-  zle reset-prompt
+# Setup fzf
+FD_SEARCH="fd --strip-cwd-prefix --hidden --follow --exclude .git"
+export FZF_DEFAULT_COMMAND="$FD_SEARCH --type f"
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_ALT_C_COMMAND="$FD_SEARCH --type d"
+export FZF_DEFAULT_OPTS="--no-height"
+export FZF_CTRL_T_OPTS="--preview 'bat -n --color=always {}'"
+export FZF_ALT_C_OPTS="--preview 'eza -la --color=always {}'"
+_fzf_compgen_path() {
+  fd --type f --hidden --follow --exclude ".git" . "$1"
 }
-zle -N _search_widget _history_search
-bindkey '^r' _search_widget
+_fzf_compgen_dir() {
+  fd --type d --hidden --follow --exclude ".git" . "$1"
+}
+_fzf_comprun() {
+  local command=$1
+  shift
+
+  case "$command" in
+    cd)           fzf --preview 'eza -la --color=always {}' "$@" ;;
+    export|unset) fzf --preview "eval 'echo \$'{}"          "$@" ;;
+    *)            fzf --preview 'bat -n --color=always {}'  "$@" ;;
+  esac
+}
+eval "$(fzf --zsh)"
 
 # zsh completions
 FPATH=/opt/homebrew/share/zsh-completions:$FPATH
