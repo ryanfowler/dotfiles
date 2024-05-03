@@ -93,6 +93,7 @@ _fzf_comprun() {
 eval "$(fzf --zsh)"
 
 # zsh completions
+FPATH=/opt/homebrew/share/zsh/site-functions:$FPATH
 FPATH=/opt/homebrew/share/zsh-completions:$FPATH
 autoload -Uz compinit
 for dump in ~/.zcompdump(N.mh+24); do
