@@ -245,6 +245,8 @@ require("lazy").setup({
 							"file",
 							"--exclude",
 							"/vendor/",
+							"--exclude",
+							"/.git/",
 							"--hidden",
 							"--color",
 							"never",
