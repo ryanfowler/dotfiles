@@ -8,6 +8,7 @@ export PATH="$HOME/go/bin:$PATH"
 
 # Homebrew
 export HOMEBREW_NO_ANALYTICS=1
+export HOMEBREW_NO_ENV_HINTS=1
 if [[ $OSTYPE = darwin* ]]; then
   export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH"
   export PATH="/opt/homebrew/opt/curl/bin:$PATH"
@@ -67,7 +68,7 @@ elif [[ $OSTYPE = linux* ]]; then
 fi
 
 # Setup fzf
-FD_SEARCH="fd --strip-cwd-prefix --hidden --follow --exclude .git"
+FD_SEARCH="fd --hidden --follow --exclude '/.git/'"
 export FZF_DEFAULT_COMMAND="$FD_SEARCH --type f"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND="$FD_SEARCH --type d"
