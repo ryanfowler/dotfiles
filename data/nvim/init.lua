@@ -233,6 +233,9 @@ require("lazy").setup({
 					sorting_strategy = "ascending",
 				},
 				extensions = {
+					file_browser = {
+						no_ignore = true,
+					},
 					["ui-select"] = {
 						require("telescope.themes").get_dropdown(),
 					},
