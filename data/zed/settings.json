@@ -2,17 +2,26 @@
   "buffer_font_family": "Monaspace Neon",
   "buffer_font_size": 14,
   "cursor_blink": false,
+  "git": {
+    "inline_blame": {
+      "enabled": false,
+      "delay_ms": 500
+    }
+  },
+  "indent_guides": {
+    "enabled": false
+  },
   "language_overrides": {
     "Go": {
       "tab_size": 8
     }
   },
   "lsp": {
-    // "gopls": {
-    //   "initialization_options": {
-    //     "buildFlags": ["-tags=sandbox,integration"]
-    //   }
-    // },
+    "gopls": {
+      "initialization_options": {
+        "buildFlags": ["-tags=sandbox,integration"]
+      }
+    },
     "rust-analyzer": {
       "initialization_options": {
         "checkOnSave": {
@@ -21,12 +30,16 @@
       }
     }
   },
-  "show_whitespaces": "all",
+  "show_whitespaces": "boundary",
+  "tabs": {
+    "git_status": true
+  },
   "telemetry": {
     "diagnostics": true
   },
   "terminal": {
-    "font_family": "Source Code Pro",
+    "blinking": "off",
+    "font_family": "MonaspiceNe Nerd Font",
     "font_size": 14
   },
   "ui_font_family": "Monaspace Neon",
