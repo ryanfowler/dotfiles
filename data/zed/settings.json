@@ -2,18 +2,34 @@
   "buffer_font_family": "Monaspace Neon",
   "buffer_font_size": 14,
   "cursor_blink": false,
+  "default_dock_anchor": "expanded",
   "git": {
     "inline_blame": {
-      "enabled": false,
+      "enabled": true,
       "delay_ms": 500
     }
   },
   "indent_guides": {
     "enabled": false
   },
-  "language_overrides": {
+  "languages": {
     "Go": {
       "tab_size": 8
+    },
+    "Python": {
+      "format_on_save": {
+        "external": {
+          "command": "ruff",
+          "arguments": [
+            "check",
+            "--exit-zero",
+            "--fix",
+            "--stdin-filename",
+            "{buffer_path}",
+            "-"
+          ]
+        }
+      }
     }
   },
   "lsp": {
@@ -31,6 +47,9 @@
     }
   },
   "show_whitespaces": "boundary",
+  "tab_bar": {
+    "show": false
+  },
   "tabs": {
     "git_status": true
   },
@@ -41,6 +60,11 @@
     "blinking": "off",
     "font_family": "MonaspiceNe Nerd Font",
     "font_size": 14
+  },
+  "theme": {
+    "mode": "dark",
+    "dark": "One Dark",
+    "light": "One Light"
   },
   "ui_font_family": "Monaspace Neon",
   "ui_font_size": 15,
