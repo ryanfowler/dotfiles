@@ -48,13 +48,14 @@
   },
   "show_whitespaces": "boundary",
   "tab_bar": {
-    "show": false
+    "show": true
   },
   "tabs": {
     "git_status": true
   },
   "telemetry": {
-    "diagnostics": true
+    "diagnostics": false,
+    "metrics": false
   },
   "terminal": {
     "blinking": "off",
