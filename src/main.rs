@@ -24,7 +24,7 @@ struct Config {
 struct Homebrew {
     formulae: Vec<String>,
     casks: Vec<String>,
-    taps: Vec<String>,
+    taps: Option<Vec<String>>,
 }
 
 #[derive(Deserialize)]
@@ -66,8 +66,10 @@ fn run() -> Result<()> {
 
 fn process_homebrew(config: &Homebrew) -> Result<()> {
     info("Installing homebrew taps");
-    for tap in &config.taps {
-        execute("brew", &["tap", tap])?;
+    if let Some(taps) = &config.taps {
+        for tap in taps {
+            execute("brew", &["tap", tap])?;
+        }
     }
 
     info("Installing homebrew formulae");

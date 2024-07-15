@@ -47,8 +47,6 @@ homebrew:
     - alacritty
     - font-monaspace-nerd-font
     - font-sauce-code-pro-nerd-font
-  taps:
-    - homebrew/cask-fonts
 
 npm:
   packages:
@@ -95,6 +93,8 @@ rules:
   # zed
   - src: "data/zed/settings.json"
     dst: "$HOME/.config/zed/settings.json"
+  - src: "data/zed/keymap.json"
+    dst: "$HOME/.config/zed/keymap.json"
 
   # zsh
   - src: "data/zsh/.zshrc"
