@@ -1,4 +1,11 @@
 {
+  "assistant": {
+    "default_model": {
+      "provider": "zed.dev",
+      "model": "claude-3-5-sonnet-20240620"
+    },
+    "version": "2"
+  },
   "buffer_font_family": "Monaspace Neon",
   "buffer_font_size": 14,
   "cursor_blink": false,
@@ -33,7 +40,7 @@
   "lsp": {
     "gopls": {
       "initialization_options": {
-        "buildFlags": ["-tags=sandbox,integration"]
+        "buildFlags": ["-tags=ceph,integration,sandbox"]
       }
     },
     "rust-analyzer": {
@@ -59,6 +66,9 @@
     "blinking": "off",
     "font_family": "MonaspiceNe Nerd Font",
     "font_size": 14
+  },
+  "toolbar": {
+    "quick_actions": false
   },
   "theme": {
     "mode": "dark",

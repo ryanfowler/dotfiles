@@ -7,5 +7,13 @@
       "ctrl-u": ["workspace::SendKeystrokes", "ctrl-shift-u z z"],
       "ctrl-d": ["workspace::SendKeystrokes", "ctrl-shift-d z z"]
     }
+  },
+  {
+    "context": "Dock || Editor && VimControl && !VimWaiting",
+    "bindings": {
+      "space space": "tab_switcher::Toggle",
+      "space s f": "file_finder::Toggle",
+      "space d": "diagnostics::Deploy"
+    }
   }
 ]
