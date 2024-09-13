@@ -58,6 +58,10 @@ rules:
   - src: "data/alacritty/alacritty.toml"
     dst: "$HOME/.config/alacritty/alacritty.toml"
 
+  # ghostty
+  - src: "data/ghostty/config"
+    dst: "$HOME/.config/ghostty/config"
+
   # helix
   - src: "data/helix/config.toml"
     dst: "$HOME/.config/helix/config.toml"
