@@ -1,4 +1,7 @@
 cursor-style-blink = false
 font-family = MonaspiceNe Nerd Font
+font-feature = -calt
+font-feature = -dlig
+font-feature = -liga
 font-size = 15
 shell-integration-features = no-cursor
