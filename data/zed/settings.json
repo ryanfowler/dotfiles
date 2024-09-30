@@ -49,6 +49,11 @@
           "command": "clippy"
         }
       }
+    },
+    "taplo": {
+      "settings": {
+        "array_auto_expand": false
+      }
     }
   },
   "show_whitespaces": "boundary",
