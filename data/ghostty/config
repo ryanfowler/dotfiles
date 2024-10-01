@@ -4,4 +4,5 @@ font-feature = -calt
 font-feature = -dlig
 font-feature = -liga
 font-size = 15
+keybind = global:ctrl+grave_accent=toggle_quick_terminal
 shell-integration-features = no-cursor
