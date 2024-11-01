@@ -4,7 +4,7 @@ version = "0.0.0"
 edition = "2021"
 
 [dependencies]
-anyhow = { version = "1.0.91" }
+anyhow = { version = "1.0.92" }
 serde = { version = "1.0.214", features = ["derive"] }
 serde_yaml = { version = "0.9.34" }
 termcolor = { version = "1.4.1" }
