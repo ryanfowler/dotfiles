@@ -495,7 +495,7 @@ require("lazy").setup({
 				gopls = {
 					settings = {
 						gopls = {
-							buildFlags = { "-tags=integration sandbox" },
+							buildFlags = { "-tags=e2e integration sandbox" },
 							-- gofumpt = true,
 							staticcheck = true,
 						},
@@ -510,7 +510,7 @@ require("lazy").setup({
 						},
 					},
 				},
-				ruff_lsp = {},
+				ruff = {},
 				rust_analyzer = {
 					settings = {
 						["rust-analyzer"] = {
