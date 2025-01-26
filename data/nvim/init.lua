@@ -235,9 +235,7 @@ require("lazy").setup({
 					sorting_strategy = "ascending",
 				},
 				extensions = {
-					file_browser = {
-						no_ignore = true,
-					},
+					file_browser = {},
 					["ui-select"] = {
 						require("telescope.themes").get_dropdown(),
 					},
@@ -285,7 +283,10 @@ require("lazy").setup({
 			vim.keymap.set("n", "<space>fb", function()
 				extensions.file_browser.file_browser({
 					path = "%:p:h",
-					hidden = true,
+					hidden = {
+						file_browser = true,
+						folder_browser = false,
+					},
 					select_buffer = true,
 				})
 			end, { desc = "[F]ile [B]rowser" })
