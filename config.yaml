@@ -8,6 +8,7 @@ homebrew:
     - esbuild
     - eza
     - fd
+    - fish
     - fzf
     - gh
     - git
@@ -57,6 +58,10 @@ rules:
   # alacritty
   - src: "data/alacritty/alacritty.toml"
     dst: "$HOME/.config/alacritty/alacritty.toml"
+
+  # fish
+  - src: "data/fish/config.fish"
+    dst: "$HOME/.config/fish/config.fish"
 
   # ghostty
   - src: "data/ghostty/config"
