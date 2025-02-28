@@ -63,3 +63,9 @@ set -x FZF_CTRL_T_OPTS "--preview 'bat -n --color=always {}'"
 set -x FZF_ALT_C_OPTS "--preview 'eza -la --color=always {}'"
 fzf --fish | source
 
+# Run optional local script
+set private $HOME/.config/fish/config-custom.fish
+if test -e $private
+    source $private
+end
+
