@@ -82,6 +82,11 @@ vim.keymap.set("n", "<BS>", "<C-^>", { desc = "Jump to last buffer" })
 vim.keymap.set("n", "<C-u>", "<C-u>zz")
 vim.keymap.set("n", "<C-d>", "<C-d>zz")
 
+-- Center the cursor after moving to top, middle, or bottom of screen.
+vim.keymap.set("n", "L", "Lzz")
+vim.keymap.set("n", "M", "Mzz")
+vim.keymap.set("n", "H", "Hzz")
+
 -- Disable netrw in favour of telescope file browser.
 vim.g.loaded_netrwPlugin = 0
 
