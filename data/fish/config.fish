@@ -43,8 +43,7 @@ switch (uname)
         set -x PATH $PATH /opt/homebrew/opt/llvm/bin
 end
 
-# htop
-alias htop="TERM=xterm-256color htop"
+set -x PATH $PATH /Users/ryanfowler/.local/bin
 
 # Defualt editor
 set -x VISUAL nvim
