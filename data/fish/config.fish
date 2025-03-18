@@ -43,7 +43,7 @@ switch (uname)
         set -x PATH $PATH /opt/homebrew/opt/llvm/bin
 end
 
-set -x PATH $PATH /Users/ryanfowler/.local/bin
+set -x PATH $PATH $HOME/.local/bin
 
 # Defualt editor
 set -x VISUAL nvim
