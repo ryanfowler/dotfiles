@@ -1,0 +1,2 @@
+fetch --complete=fish | source
+

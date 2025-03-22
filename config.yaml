@@ -62,6 +62,8 @@ rules:
   # fish
   - src: "data/fish/config.fish"
     dst: "$HOME/.config/fish/config.fish"
+  - src: "data/fish/completions/fetch.fish"
+    dst: "$HOME/.config/fish/completions/fetch.fish"
 
   # ghostty
   - src: "data/ghostty/config"
