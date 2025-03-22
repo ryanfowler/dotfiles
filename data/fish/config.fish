@@ -22,6 +22,9 @@ switch (uname)
         set -x INFOPATH /home/linuxbrew/.linuxbrew/share/info $INFOPATH
 end
 
+# fetch
+fetch --complete=fish | source
+
 # Starship
 set -x STARSHIP_LOG error
 starship init fish | source
