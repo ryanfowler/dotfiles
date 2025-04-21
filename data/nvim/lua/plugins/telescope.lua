@@ -78,7 +78,7 @@ return {
 		vim.keymap.set("n", "<leader>gs", builtin.git_status, { desc = "[G]it [S]tatus" })
 
 		local extensions = require("telescope").extensions
-		vim.keymap.set("n", "<space>fb", function()
+		vim.keymap.set("n", "<leader>fb", function()
 			extensions.file_browser.file_browser({
 				path = "%:p:h",
 				hidden = {
@@ -88,6 +88,10 @@ return {
 				select_buffer = true,
 			})
 		end, { desc = "[F]ile [B]rowser" })
+
+		vim.keymap.set("n", "<leader>dd", function()
+			builtin.diagnostics({ bufnr = 0 })
+		end, { desc = "Search [D]ocument [D]iagnostics" })
 
 		vim.keymap.set("n", "<leader>/", function()
 			builtin.current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
