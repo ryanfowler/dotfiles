@@ -126,6 +126,8 @@ rules:
     dst: "$HOME/.config/zed/settings.json"
   - src: "data/zed/keymap.json"
     dst: "$HOME/.config/zed/keymap.json"
+  - src: "data/zed/tasks.json"
+    dst: "$HOME/.config/zed/tasks.json"
 
   # zsh
   - src: "data/zsh/.zshrc"

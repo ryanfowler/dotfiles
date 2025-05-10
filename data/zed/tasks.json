@@ -1,0 +1,37 @@
+[
+  {
+    "label": "copy git link",
+    "command": "gitlink",
+    "args": ["$ZED_FILE", "$ZED_ROW"],
+    "reveal": "no_focus",
+    "use_new_terminal": true,
+    "hide": "on_success"
+  },
+  {
+    "label": "open git link",
+    "command": "gitlink",
+    "args": ["$ZED_FILE", "$ZED_ROW"],
+    "env": { "OPEN": "true" },
+    "reveal": "no_focus",
+    "use_new_terminal": true,
+    "hide": "on_success"
+  },
+  {
+    "label": "copy git blame",
+    "command": "gitlink",
+    "args": ["$ZED_FILE", "$ZED_ROW"],
+    "env": { "BLAME": "true" },
+    "reveal": "no_focus",
+    "use_new_terminal": true,
+    "hide": "on_success"
+  },
+  {
+    "label": "open git blame",
+    "command": "gitlink",
+    "args": ["$ZED_FILE", "$ZED_ROW"],
+    "env": { "BLAME": "true", "OPEN": "true" },
+    "reveal": "no_focus",
+    "use_new_terminal": true,
+    "hide": "on_success"
+  }
+]

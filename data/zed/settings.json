@@ -1,8 +1,8 @@
 {
   "assistant": {
     "default_model": {
-      "provider": "zed.dev",
-      "model": "claude-3-5-sonnet-20240620"
+      "provider": "copilot_chat",
+      "model": "gpt-4o"
     },
     "version": "2"
   },
@@ -10,6 +10,9 @@
   "buffer_font_size": 14,
   "cursor_blink": false,
   "default_dock_anchor": "expanded",
+  "features": {
+    "edit_prediction_provider": "none"
+  },
   "git": {
     "inline_blame": {
       "enabled": true,
@@ -40,12 +43,16 @@
   "lsp": {
     "gopls": {
       "initialization_options": {
-        "buildFlags": ["-tags=ceph,integration,sandbox"]
+        "analyses": {
+          "unusedvariable": true,
+          "useany": true
+        },
+        "buildFlags": ["-tags=ceph,e2e,integration,sandbox,smoke"]
       }
     },
     "rust-analyzer": {
       "initialization_options": {
-        "checkOnSave": {
+        "check": {
           "command": "clippy"
         }
       }

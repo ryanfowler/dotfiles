@@ -13,7 +13,11 @@
     "bindings": {
       "space space": "tab_switcher::Toggle",
       "space s f": "file_finder::Toggle",
-      "space d": "diagnostics::Deploy"
+      "space d": "diagnostics::Deploy",
+      "space g l": ["task::Spawn", { "task_name": "copy git link" }],
+      "space g L": ["task::Spawn", { "task_name": "open git link" }],
+      "space g b": ["task::Spawn", { "task_name": "copy git blame" }],
+      "space g B": ["task::Spawn", { "task_name": "open git blame" }]
     }
   }
 ]
