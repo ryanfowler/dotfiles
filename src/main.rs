@@ -17,6 +17,7 @@ use termcolor::{ColorChoice, ColorSpec, StandardStream, WriteColor};
 struct Config {
     homebrew: Homebrew,
     npm: Npm,
+    commands: Vec<String>,
     rules: Vec<Rule>,
 }
 
@@ -58,6 +59,7 @@ fn run() -> Result<()> {
 
     process_homebrew(&config.homebrew)?;
     process_npm(&config.npm)?;
+    process_commands(&config.commands)?;
     process_rules(&config.rules)?;
 
     info("All done!");
@@ -102,6 +104,15 @@ fn process_npm(config: &Npm) -> Result<()> {
     ];
     let args: Vec<_> = args.iter().chain(&config.packages).collect();
     execute("npm", &args)
+}
+
+fn process_commands(commands: &[String]) -> Result<()> {
+    info("Running commands");
+    for command in commands {
+        println!("  running command: \"{}\"", command);
+        execute("bash", &["-c", command])?;
+    }
+    Ok(())
 }
 
 fn process_rules(rules: &[Rule]) -> Result<()> {

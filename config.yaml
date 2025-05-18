@@ -54,6 +54,9 @@ npm:
     - svelte-language-server
     - vscode-langservers-extracted
 
+commands:
+  - "go install github.com/ryanfowler/gitlink@latest"
+
 rules:
   # alacritty
   - src: "data/alacritty/alacritty.toml"
