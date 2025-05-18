@@ -1,9 +1,10 @@
 {
-  "breadcrumbs.enabled": false,
+  "breadcrumbs.enabled": true,
   "diffEditor.ignoreTrimWhitespace": false,
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
+    "source.fixAll.eslint": "explicit"
   },
+  "editor.cursorBlinking": "solid",
   "editor.fontFamily": "'Monaspace Neon', 'Source Code Pro', 'Ubuntu Mono', Menlo, Monaco, 'Courier New', monospace",
   "editor.fontSize": 15,
   "editor.guides.indentation": false,
@@ -42,13 +43,10 @@
   "github.copilot.enable": {
     "*": false
   },
-  "go.buildTags": "sandbox",
-  "go.formatTool": "goimports",
-  "go.lintTool": "staticcheck",
-  "go.testOnSave": false,
-  "go.toolsManagement.autoUpdate": true,
-  "go.useLanguageServer": true,
-  "go.vetOnSave": "off",
+  "go.buildTags": "ceph,e2e,integration,sandbox,smoke",
+  "gopls": {
+    "ui.semanticTokens": true
+  },
   "javascript.updateImportsOnFileMove.enabled": "always",
   "protoc": {
     "options": [
@@ -58,8 +56,8 @@
   "redhat.telemetry.enabled": false,
   "remote.autoForwardPorts": false,
   "rust-analyzer.cargo.features": "all",
-  "rust-analyzer.checkOnSave.command": "clippy",
-  "rust-analyzer.checkOnSave.features": "all",
+  "rust-analyzer.check.command": "clippy",
+  "rust-analyzer.check.features": "all",
   "rust-analyzer.inlayHints.maxLength": 10,
   "search.exclude": {
     "**/bower_components": true,
@@ -70,6 +68,59 @@
   "terminal.integrated.fontSize": 16,
   "terminal.integrated.lineHeight": 1.2,
   "typescript.updateImportsOnFileMove.enabled": "always",
+  "vim.hlsearch": true,
+  "vim.leader": "<space>",
+  "vim.normalModeKeyBindingsNonRecursive": [
+    {
+      "before": ["<C-d>"],
+      "after": ["<C-d>", "z", "z"]
+    },
+    {
+      "before": ["<C-u>"],
+      "after": ["<C-u>", "z", "z"]
+    },
+    {
+      "before": ["K"],
+      "commands": ["editor.action.showHover"]
+    },
+    {
+      "before": ["g", "r"],
+      "commands": ["editor.action.referenceSearch.trigger"]
+    },
+    {
+      "before": ["[", "d"],
+      "commands": ["editor.action.marker.prev"]
+    },
+    {
+      "before": ["]", "d"],
+      "commands": ["editor.action.marker.next"]
+    },
+    {
+      "before": ["g", "D"],
+      "commands": ["editor.action.revealDeclaration"]
+    },
+    {
+      "before": ["g", "I"],
+      "commands": ["editor.action.goToImplementation"]
+    },
+    {
+      "before": ["g", "t"],
+      "commands": ["editor.action.goToTypeDefinition"]
+    },
+    {
+      "before": ["<leader>", "r", "n"],
+      "commands": ["editor.action.rename"]
+    },
+    {
+      "before": ["<leader>", "c", "a"],
+      "commands": ["editor.action.codeAction"]
+    },
+    {
+      "before": ["<leader>", "<leader>"],
+      "commands": ["workbench.action.showAllEditors"]
+    }
+  ],
+  "vim.useSystemClipboard": true,
   "window.nativeTabs": true,
   "window.titleBarStyle": "custom",
   "workbench.colorTheme": "GitHub Dark Colorblind (Beta)",
@@ -78,7 +129,7 @@
   "workbench.editor.showTabs": "multiple",
   "[go]": {
     "editor.codeActionsOnSave": {
-      "source.organizeImports": true
+      "source.organizeImports": "explicit"
     },
     "editor.formatOnSave": true,
     "editor.snippetSuggestions": "none",
@@ -87,7 +138,7 @@
   "[go.mod]": {
     "editor.formatOnSave": true,
     "editor.codeActionsOnSave": {
-      "source.organizeImports": true
+      "source.organizeImports": "explicit"
     }
   },
   "[rust]": {
