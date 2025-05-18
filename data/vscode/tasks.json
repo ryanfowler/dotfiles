@@ -1,0 +1,85 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Open Permalink",
+            "type": "shell",
+            "command": "gitlink",
+            "args": [
+                "--open",
+                "${file}",
+                "${lineNumber}"
+            ],
+            "presentation": {
+                "reveal": "never",
+                "echo": false,
+                "focus": false,
+                "panel": "shared"
+            },
+            "problemMatcher": [],
+            "runOptions": {
+                "runOn": "default"
+            }
+        },
+        {
+            "label": "Copy Permalink",
+            "type": "shell",
+            "command": "gitlink",
+            "args": [
+                "${file}",
+                "${lineNumber}"
+            ],
+            "presentation": {
+                "reveal": "never",
+                "echo": false,
+                "focus": false,
+                "panel": "shared"
+            },
+            "problemMatcher": [],
+            "runOptions": {
+                "runOn": "default"
+            }
+        },
+        {
+            "label": "Open Blame Permalink",
+            "type": "shell",
+            "command": "gitlink",
+            "args": [
+                "--blame",
+                "--open",
+                "${file}",
+                "${lineNumber}"
+            ],
+            "presentation": {
+                "reveal": "never",
+                "echo": false,
+                "focus": false,
+                "panel": "shared"
+            },
+            "problemMatcher": [],
+            "runOptions": {
+                "runOn": "default"
+            }
+        },
+        {
+            "label": "Copy Blame Permalink",
+            "type": "shell",
+            "command": "gitlink",
+            "args": [
+                "--blame",
+                "${file}",
+                "${lineNumber}"
+            ],
+            "presentation": {
+                "reveal": "never",
+                "echo": false,
+                "focus": false,
+                "panel": "shared"
+            },
+            "problemMatcher": [],
+            "runOptions": {
+                "runOn": "default"
+            }
+        }
+    ]
+}

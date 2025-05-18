@@ -120,6 +120,10 @@ rules:
     dst:
       linux: "$HOME/.config/Code/User/settings.json"
       macos: "$HOME/Library/Application Support/Code/User/settings.json"
+  - src: "data/vscode/tasks.json"
+    dst:
+      linux: "$HOME/.config/Code/User/tasks.json"
+      macos: "$HOME/Library/Application Support/Code/User/tasks.json"
 
   # zed
   - src: "data/zed/settings.json"

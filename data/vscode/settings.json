@@ -118,6 +118,80 @@
     {
       "before": ["<leader>", "<leader>"],
       "commands": ["workbench.action.showAllEditors"]
+    },
+    {
+      "before": ["<leader>", "g", "L"],
+      "commands": [
+        {
+          "command": "workbench.action.tasks.runTask",
+          "args": "Open Permalink"
+        }
+      ]
+    },
+    {
+      "before": ["<leader>", "g", "l"],
+      "commands": [
+        {
+          "command": "workbench.action.tasks.runTask",
+          "args": "Copy Permalink"
+        }
+      ]
+    },
+    {
+      "before": ["<leader>", "g", "B"],
+      "commands": [
+        {
+          "command": "workbench.action.tasks.runTask",
+          "args": "Open Blame Permalink"
+        }
+      ]
+    },
+    {
+      "before": ["<leader>", "g", "b"],
+      "commands": [
+        {
+          "command": "workbench.action.tasks.runTask",
+          "args": "Copy Blame Permalink"
+        }
+      ]
+    }
+  ],
+  "vim.visualModeKeyBindingsNonRecursive": [
+    {
+      "before": ["<leader>", "g", "L"],
+      "commands": [
+        {
+          "command": "workbench.action.tasks.runTask",
+          "args": "Open Permalink"
+        }
+      ]
+    },
+    {
+      "before": ["<leader>", "g", "l"],
+      "commands": [
+        {
+          "command": "workbench.action.tasks.runTask",
+          "args": "Copy Permalink"
+        }
+      ]
+    },
+    {
+      "before": ["<leader>", "g", "B"],
+      "commands": [
+        {
+          "command": "workbench.action.tasks.runTask",
+          "args": "Open Blame Permalink"
+        }
+      ]
+    },
+    {
+      "before": ["<leader>", "g", "b"],
+      "commands": [
+        {
+          "command": "workbench.action.tasks.runTask",
+          "args": "Copy Blame Permalink"
+        }
+      ]
     }
   ],
   "vim.useSystemClipboard": true,
