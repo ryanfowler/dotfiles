@@ -158,6 +158,18 @@
   ],
   "vim.visualModeKeyBindingsNonRecursive": [
     {
+      "before": ["<C-d>"],
+      "after": ["<C-d>", "z", "z"]
+    },
+    {
+      "before": ["<C-u>"],
+      "after": ["<C-u>", "z", "z"]
+    },
+    {
+      "before": ["<leader>", "<leader>"],
+      "commands": ["workbench.action.showAllEditors"]
+    },
+    {
       "before": ["<leader>", "g", "L"],
       "commands": [
         {
