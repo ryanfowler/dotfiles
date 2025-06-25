@@ -51,6 +51,8 @@ homebrew:
 
 npm:
   packages:
+    - "@anthropic-ai/claude-code"
+    - "@google/gemini-cli"
     - svelte-language-server
     - vscode-langservers-extracted
 
