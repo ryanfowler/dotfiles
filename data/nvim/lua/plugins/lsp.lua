@@ -93,7 +93,7 @@ return {
 			gopls = {
 				settings = {
 					gopls = {
-						buildFlags = { "-tags=e2e integration sandbox smoke" },
+						buildFlags = { "-tags=ceph e2e integration sandbox smoke" },
 						-- gofumpt = true,
 						staticcheck = true,
 					},
