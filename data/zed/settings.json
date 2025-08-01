@@ -63,6 +63,7 @@
       }
     }
   },
+  "max_tabs": 8,
   "show_whitespaces": "boundary",
   "tab_bar": {
     "show": true
