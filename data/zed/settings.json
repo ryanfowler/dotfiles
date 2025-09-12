@@ -65,6 +65,16 @@
   },
   "max_tabs": 8,
   "show_whitespaces": "boundary",
+  "ssh_connections": [
+    {
+      "host": "dev",
+      "projects": [
+        {
+          "paths": ["/home/ryanfowler/rust/httptest"]
+        }
+      ]
+    }
+  ],
   "tab_bar": {
     "show": true
   },
@@ -90,6 +100,7 @@
   },
   "ui_font_family": "Monaspace Neon",
   "ui_font_size": 15,
+  "use_system_window_tabs": true,
   "vim_mode": true,
   "wrap_guides": [80]
 }
