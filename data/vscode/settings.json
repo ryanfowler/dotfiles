@@ -44,6 +44,8 @@
     "*": false
   },
   "go.buildTags": "ceph,e2e,integration,sandbox,smoke",
+  "go.toolsManagement.autoUpdate": true,
+  "go.diagnostic.vulncheck": "Off",
   "gopls": {
     "ui.semanticTokens": true
   },
@@ -227,7 +229,19 @@
       "source.organizeImports": "explicit"
     }
   },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
   "[rust]": {
     "editor.formatOnSave": true
-  }
+  },
+  "workbench.editor.empty.hint": "hidden",
+  "makefile.configureOnOpen": false,
+  "github.copilot.nextEditSuggestions.enabled": true,
+  "chat.viewSessions.orientation": "stacked"
 }
