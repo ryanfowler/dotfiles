@@ -52,9 +52,7 @@ homebrew:
 
 npm:
   packages:
-    - "@anthropic-ai/claude-code"
     - "@google/gemini-cli"
-    - svelte-language-server
     - vscode-langservers-extracted
 
 commands:
@@ -64,6 +62,12 @@ rules:
   # alacritty
   - src: "data/alacritty/alacritty.toml"
     dst: "$HOME/.config/alacritty/alacritty.toml"
+
+  # claude
+  - src: "data/claude/commands/commit.md"
+    dst: "$HOME/.claude/commands/commit.md"
+  - src: "data/claude/commands/review.md"
+    dst: "$HOME/.claude/commands/review.md"
 
   # fish
   - src: "data/fish/config.fish"
