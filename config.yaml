@@ -52,7 +52,6 @@ homebrew:
 
 npm:
   packages:
-    - "@google/gemini-cli"
     - vscode-langservers-extracted
 
 commands:
@@ -68,6 +67,8 @@ rules:
     dst: "$HOME/.claude/commands/commit.md"
   - src: "data/claude/commands/review.md"
     dst: "$HOME/.claude/commands/review.md"
+  - src: "data/claude/settings.json"
+    dst: "$HOME/.claude/settings.json"
 
   # fish
   - src: "data/fish/config.fish"
