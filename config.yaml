@@ -36,6 +36,7 @@ homebrew:
     - starship
     - staticcheck
     - tmux
+    - tree-sitter-cli
     - typescript-language-server
     - vips
     - wget
