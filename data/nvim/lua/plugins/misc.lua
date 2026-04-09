@@ -4,6 +4,8 @@ return {
 	{ "tpope/vim-sleuth" },
 	{
 		"stevearc/conform.nvim",
+		event = "BufWritePre",
+		cmd = "ConformInfo",
 		opts = {
 			notify_on_error = false,
 			format_on_save = function(bufnr)
@@ -49,9 +51,7 @@ return {
 	},
 	{
 		"m4xshen/hardtime.nvim",
+		enabled = false,
 		dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
-		opts = {
-			enabled = false,
-		},
 	},
 }
