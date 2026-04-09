@@ -9,5 +9,10 @@ return {
 		require("nvim-treesitter").install({
 			"bash", "c", "go", "html", "javascript", "lua", "luadoc", "markdown", "rust", "typescript", "tsx",
 		})
+		vim.api.nvim_create_autocmd("FileType", {
+			callback = function(ev)
+				pcall(vim.treesitter.start, ev.buf)
+			end,
+		})
 	end,
 }
