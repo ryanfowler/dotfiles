@@ -2,19 +2,12 @@
 
 return {
 	"nvim-treesitter/nvim-treesitter",
+	branch = "main",
 	build = ":TSUpdate",
-	opts = {
-		ensure_installed = { "bash", "c", "go", "html", "javascript", "lua", "luadoc", "markdown", "rust", "typescript", "tsx" },
-		auto_install = true,
-		highlight = {
-			enable = true,
-			-- Some languages depend on vim's regex highlighting system (such as Ruby) for indent rules.
-			additional_vim_regex_highlighting = { "ruby" },
-		},
-		indent = { enable = true, disable = { "ruby" } },
-	},
-	config = function(_, opts)
-		---@diagnostic disable-next-line: missing-fields
-		require("nvim-treesitter.configs").setup(opts)
+	config = function()
+		require("nvim-treesitter").setup({})
+		require("nvim-treesitter").install({
+			"bash", "c", "go", "html", "javascript", "lua", "luadoc", "markdown", "rust", "typescript", "tsx",
+		})
 	end,
 }

@@ -1,7 +1,6 @@
 ---@diagnostic disable: undefined-global
 
 return {
-	{ "numToStr/Comment.nvim", opts = {} },
 	{ "tpope/vim-sleuth" },
 	{
 		"stevearc/conform.nvim",
