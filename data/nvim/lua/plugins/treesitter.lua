@@ -5,15 +5,39 @@ return {
 	event = { "BufReadPost", "BufNewFile" },
 	branch = "main",
 	build = ":TSUpdate",
-	config = function()
-		require("nvim-treesitter").setup({})
-		require("nvim-treesitter").install({
-			"bash", "c", "go", "html", "javascript", "lua", "luadoc", "markdown", "rust", "typescript", "tsx",
-		})
+	init = function()
 		vim.api.nvim_create_autocmd("FileType", {
+			group = vim.api.nvim_create_augroup("kickstart-treesitter-start", { clear = true }),
+			pattern = {
+				"bash",
+				"c",
+				"go",
+				"html",
+				"javascript",
+				"lua",
+				"markdown",
+				"rust",
+				"typescript",
+				"typescriptreact",
+			},
 			callback = function(ev)
-				pcall(vim.treesitter.start, ev.buf)
+				vim.treesitter.start(ev.buf)
 			end,
 		})
 	end,
+	opts = {
+		ensure_installed = {
+			"bash",
+			"c",
+			"go",
+			"html",
+			"javascript",
+			"lua",
+			"luadoc",
+			"markdown",
+			"rust",
+			"tsx",
+			"typescript",
+		},
+	},
 }
