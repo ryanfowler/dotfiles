@@ -18,17 +18,29 @@ set("n", "M", "Mzz")
 set("n", "H", "Hzz")
 
 -- Diagnostic keymaps.
+local function show_diagnostic_float(diagnostic, bufnr)
+	if not diagnostic then
+		return
+	end
+
+	vim.diagnostic.open_float({
+		bufnr = bufnr,
+		scope = "line",
+		pos = diagnostic.lnum,
+	})
+end
+
 set("n", "[d", function()
-	vim.diagnostic.jump({ count = -1, float = true })
+	vim.diagnostic.jump({ count = -1, on_jump = show_diagnostic_float })
 end, { desc = "Go to previous [D]iagnostic message" })
 set("n", "]d", function()
-	vim.diagnostic.jump({ count = 1, float = true })
+	vim.diagnostic.jump({ count = 1, on_jump = show_diagnostic_float })
 end, { desc = "Go to next [D]iagnostic message" })
 set("n", "[e", function()
-	vim.diagnostic.jump({ count = -1, float = true, severity = vim.diagnostic.severity.ERROR })
+	vim.diagnostic.jump({ count = -1, on_jump = show_diagnostic_float, severity = vim.diagnostic.severity.ERROR })
 end, { desc = "Go to previous [E]rror diagnostic message" })
 set("n", "]e", function()
-	vim.diagnostic.jump({ count = 1, float = true, severity = vim.diagnostic.severity.ERROR })
+	vim.diagnostic.jump({ count = 1, on_jump = show_diagnostic_float, severity = vim.diagnostic.severity.ERROR })
 end, { desc = "Go to next [E]rror diagnostic message" })
 set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show diagnostic [E]rror messages" })
 set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
