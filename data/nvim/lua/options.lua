@@ -42,7 +42,7 @@ opt.undofile = true
 opt.inccommand = "split"
 
 -- Disable line wrap.
-vim.wo.wrap = false
+vim.opt.wrap = false
 
 -- Highlight text when yanking.
 api.nvim_create_autocmd("TextYankPost", {
