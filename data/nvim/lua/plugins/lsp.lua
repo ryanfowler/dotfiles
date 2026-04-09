@@ -114,8 +114,6 @@ return {
 
 		vim.lsp.enable({ "gopls", "lua_ls", "ruff", "rust_analyzer", "ts_ls", "zls" })
 
-		require("mason").setup()
-
 		local ensure_installed = { "gopls", "lua-language-server", "ruff", "rust-analyzer", "typescript-language-server", "zls", "stylua" }
 		require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 	end,
