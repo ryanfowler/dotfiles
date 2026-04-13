@@ -2,16 +2,34 @@
 
 return {
 	"nvim-treesitter/nvim-treesitter",
-	event = { "BufReadPost", "BufNewFile" },
+	lazy = false,
 	branch = "main",
 	build = ":TSUpdate",
-	init = function()
+	config = function()
+		require("nvim-treesitter").setup({})
+		require("nvim-treesitter").install({
+			"bash",
+			"c",
+			"go",
+			"gomod",
+			"gosum",
+			"html",
+			"javascript",
+			"lua",
+			"luadoc",
+			"markdown",
+			"rust",
+			"tsx",
+			"typescript",
+		})
 		vim.api.nvim_create_autocmd("FileType", {
 			group = vim.api.nvim_create_augroup("kickstart-treesitter-start", { clear = true }),
 			pattern = {
 				"bash",
 				"c",
 				"go",
+				"gomod",
+				"gosum",
 				"html",
 				"javascript",
 				"lua",
@@ -25,19 +43,4 @@ return {
 			end,
 		})
 	end,
-	opts = {
-		ensure_installed = {
-			"bash",
-			"c",
-			"go",
-			"html",
-			"javascript",
-			"lua",
-			"luadoc",
-			"markdown",
-			"rust",
-			"tsx",
-			"typescript",
-		},
-	},
 }
