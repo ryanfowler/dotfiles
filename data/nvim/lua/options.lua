@@ -4,6 +4,7 @@ local api = vim.api
 local opt = vim.opt
 
 -- Basic UI/UX.
+opt.termguicolors = true
 opt.mouse = "a"
 opt.number = true
 opt.relativenumber = false
