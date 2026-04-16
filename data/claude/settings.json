@@ -4,7 +4,6 @@
     "pr": ""
   },
   "permissions": {
-    "mode": "auto",
     "deny": [
       "Bash(rm -rf /)",
       "Bash(rm -rf ~)",
@@ -13,7 +12,8 @@
       "Read(./.env)",
       "Read(./.env.*)",
       "Read(./secrets/**)"
-    ]
+    ],
+    "mode": "auto"
   },
   "model": "opus",
   "enabledPlugins": {
@@ -45,5 +45,6 @@
       "gh",
       "git"
     ]
-  }
+  },
+  "effortLevel": "medium"
 }
