@@ -58,8 +58,15 @@ api.nvim_create_autocmd("TextYankPost", {
 vim.g.loaded_netrwPlugin = 0
 api.nvim_create_autocmd("VimEnter", {
 	callback = function()
-		if vim.fn.argv(0) == "" then
-			require("telescope.builtin").find_files()
+		if vim.fn.argv(0) ~= "" then
+			return
 		end
+		if vim.g.started_by_firenvim then
+			return
+		end
+		if vim.fn.line2byte("$") ~= -1 then
+			return
+		end
+		require("telescope.builtin").find_files()
 	end,
 })
