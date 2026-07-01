@@ -6,9 +6,10 @@ if ! command -v brew &> /dev/null; then
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 
-if ! command -v cargo &> /dev/null; then
-    printf "\n===> Installing rustup\n"
-    curl https://sh.rustup.rs -sSf | sh -s -- -y
+if ! command -v node &> /dev/null; then
+    printf "\n===> Installing node\n"
+    brew install node
 fi
 
-cargo run --quiet
+npm install --quiet --no-fund --no-update-notifier
+npm run install-dotfiles

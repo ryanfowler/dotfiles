@@ -15,8 +15,6 @@ if [[ $(uname) == "Darwin" ]]; then
   brew upgrade --casks
 fi
 
-print_bold "\n===> Updating rust"
-rustup -q update
-
 print_bold "\n===> Updating npm"
 npm update --global --no-fund --no-update-notifier
+npm update --no-fund --no-update-notifier
