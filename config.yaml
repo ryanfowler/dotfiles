@@ -53,6 +53,7 @@ homebrew:
 
 npm:
   packages:
+    - "@earendil-works/pi-coding-agent"
     - vscode-langservers-extracted
 
 commands:
@@ -70,6 +71,14 @@ rules:
     dst: "$HOME/.claude/commands/review.md"
   - src: "data/claude/settings.json"
     dst: "$HOME/.claude/settings.json"
+
+  # pi
+  - src: "data/pi/prompts/commit.md"
+    dst: "$HOME/.pi/agent/prompts/commit.md"
+  - src: "data/pi/prompts/review.md"
+    dst: "$HOME/.pi/agent/prompts/review.md"
+  - src: "data/pi/prompts/review-branch.md"
+    dst: "$HOME/.pi/agent/prompts/review-branch.md"
 
   # fish
   - src: "data/fish/config.fish"
