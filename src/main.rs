@@ -99,6 +99,7 @@ fn process_npm(config: &Npm) -> Result<()> {
         "install".to_owned(),
         "--quiet".to_owned(),
         "--global".to_owned(),
+        "--ignore-scripts".to_owned(),
         "--no-fund".to_owned(),
         "--no-update-notifier".to_owned(),
     ];
