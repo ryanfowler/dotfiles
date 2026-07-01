@@ -1,0 +1,13 @@
+{
+  "name": "dotfiles",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check": "node --check src/main.js",
+    "install-dotfiles": "node src/main.js"
+  },
+  "dependencies": {
+    "yaml": "^2.6.0"
+  }
+}

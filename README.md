@@ -10,7 +10,7 @@ To install all tooling and create the necessary symlinks for configuration, run 
 ./install.sh
 ```
 
-Note: The script will automatically install [rustup](https://rustup.rs/) and
+Note: The script will automatically install [Node.js](https://nodejs.org/) and
 [homebrew](https://brew.sh/) if they can't be found locally.
 
 ### License
