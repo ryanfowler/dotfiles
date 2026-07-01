@@ -73,6 +73,8 @@ rules:
     dst: "$HOME/.claude/settings.json"
 
   # pi
+  - src: "data/pi/extensions/rate-limits.ts"
+    dst: "$HOME/.pi/agent/extensions/rate-limits.ts"
   - src: "data/pi/prompts/commit.md"
     dst: "$HOME/.pi/agent/prompts/commit.md"
   - src: "data/pi/prompts/review.md"
