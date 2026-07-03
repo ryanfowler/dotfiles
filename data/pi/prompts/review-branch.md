@@ -47,9 +47,9 @@ Output format:
 
 1. Start with a short summary of the change and overall risk level: **low**, **medium**, or **high**
 2. Then list findings by severity:
-   - 🔴 **Critical** — Bugs, security issues, or regressions that must be fixed
-   - 🟡 **Warning** — Likely issues or important gaps worth addressing
-   - 🟢 **Suggestion** — Simplifications or improvements, not blocking
+   - **Critical** — Bugs, security issues, or regressions that must be fixed
+   - **Warning** — Likely issues or important gaps worth addressing
+   - **Suggestion** — Simplifications or improvements, not blocking
 3. For each finding include:
    - File and line/range when possible
    - What is wrong

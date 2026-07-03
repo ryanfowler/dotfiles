@@ -49,6 +49,6 @@ Workflow:
    - Branch name
    - Push result
    - PR URL, if created
-   - Validation run and result
+   - Any validation run and result
    - Any notable caveats
 
