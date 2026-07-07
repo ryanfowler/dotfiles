@@ -58,6 +58,7 @@ npm:
 
 commands:
   - "go install github.com/ryanfowler/gitlink@latest"
+  - "npm install --prefix data/pi/extensions/web-search --quiet --ignore-scripts --no-fund --no-update-notifier"
 
 rules:
   # alacritty
@@ -75,6 +76,8 @@ rules:
   # pi
   - src: "data/pi/extensions/rate-limits.ts"
     dst: "$HOME/.pi/agent/extensions/rate-limits.ts"
+  - src: "data/pi/extensions/web-search"
+    dst: "$HOME/.pi/agent/extensions/web-search"
   - src: "data/pi/prompts/commit.md"
     dst: "$HOME/.pi/agent/prompts/commit.md"
   - src: "data/pi/prompts/review.md"
