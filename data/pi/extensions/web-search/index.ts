@@ -2,6 +2,7 @@ import { Readability } from "@mozilla/readability";
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import { JSDOM } from "jsdom";
 import TurndownService from "turndown";
+import { gfm } from "@joplin/turndown-plugin-gfm";
 import { Type } from "typebox";
 
 type SearchResult = {
@@ -228,6 +229,7 @@ async function readUrl(url: string, signal?: AbortSignal): Promise<ReadUrlResult
     element.remove();
   }
   const turndown = new TurndownService({ codeBlockStyle: "fenced", headingStyle: "atx", bulletListMarker: "-" });
+  turndown.use(gfm);
   const markdown = turndown.turndown(articleDom.window.document.body.innerHTML).trim();
   articleDom.window.close();
 
