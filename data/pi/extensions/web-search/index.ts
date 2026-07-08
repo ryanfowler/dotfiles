@@ -3,7 +3,6 @@ import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import { JSDOM } from "jsdom";
 import TurndownService from "turndown";
 import { gfm } from "@joplin/turndown-plugin-gfm";
-import { Type } from "typebox";
 
 type SearchResult = {
   title: string;
@@ -250,10 +249,14 @@ export default function (pi: ExtensionAPI) {
     description: "Search DuckDuckGo HTML and return search results without fetching pages.",
     promptSnippet: "Search DuckDuckGo for public web pages; returns titles, URLs, and snippets only.",
     promptGuidelines: ["Use web_search for web discovery when you need relevant public URLs before reading pages."],
-    parameters: Type.Object({
-      query: Type.String({ description: "Search query" }),
-      max_results: Type.Optional(Type.Number({ description: "Maximum results to return, 1-20", minimum: 1, maximum: 20 })),
-    }),
+    parameters: {
+      type: "object",
+      properties: {
+        query: { type: "string", description: "Search query" },
+        max_results: { type: "number", description: "Maximum results to return, 1-20", minimum: 1, maximum: 20 },
+      },
+      required: ["query"],
+    } as any,
     async execute(_toolCallId, params, signal) {
       return jsonToolResult({ results: await webSearch(params.query, params.max_results ?? 5, signal) });
     },
@@ -265,7 +268,13 @@ export default function (pi: ExtensionAPI) {
     description: "Fetch a public HTML page, extract the main article with Readability, and return Markdown.",
     promptSnippet: "Read a specific public URL and return cleaned Markdown article content.",
     promptGuidelines: ["Use read_url when the user provides a URL or when detailed source content is needed from a known URL."],
-    parameters: Type.Object({ url: Type.String({ description: "Public http(s) URL to read" }) }),
+    parameters: {
+      type: "object",
+      properties: {
+        url: { type: "string", description: "Public http(s) URL to read" },
+      },
+      required: ["url"],
+    } as any,
     async execute(_toolCallId, params, signal) {
       return jsonToolResult(await readUrl(params.url, signal));
     },
