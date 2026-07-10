@@ -20,7 +20,7 @@ type ReadUrlResult = {
 };
 
 const DDG_SEARCH_URL = "https://html.duckduckgo.com/html/";
-const USER_AGENT = "pi-web-search/0.1 (+https://github.com/ryanfowler/dotfiles)";
+const USER_AGENT = "pi-web-tools/0.1 (+https://github.com/ryanfowler/dotfiles)";
 const MAX_BYTES = 5 * 1024 * 1024;
 const TIMEOUT_MS = 10_000;
 const MAX_REDIRECTS = 5;
@@ -155,7 +155,10 @@ async function readResponseBytes(response: Response, signal?: AbortSignal): Prom
     if (done) break;
     if (!value) continue;
     received += value.byteLength;
-    if (received > MAX_BYTES) throw new Error(`response exceeds ${MAX_BYTES} bytes`);
+    if (received > MAX_BYTES) {
+      await reader.cancel().catch(() => undefined);
+      throw new Error(`response exceeds ${MAX_BYTES} bytes`);
+    }
     chunks.push(value);
   }
 
@@ -246,8 +249,8 @@ export default function (pi: ExtensionAPI) {
   pi.registerTool({
     name: "web_search",
     label: "Web Search",
-    description: "Search DuckDuckGo HTML and return search results without fetching pages.",
-    promptSnippet: "Search DuckDuckGo for public web pages; returns titles, URLs, and snippets only.",
+    description: "Search the web and return results without fetching pages.",
+    promptSnippet: "Search public web pages; returns titles, URLs, and snippets only.",
     promptGuidelines: ["Use web_search for web discovery when you need relevant public URLs before reading pages."],
     parameters: {
       type: "object",
@@ -263,11 +266,11 @@ export default function (pi: ExtensionAPI) {
   });
 
   pi.registerTool({
-    name: "read_url",
-    label: "Read URL",
+    name: "web_fetch",
+    label: "Web Fetch",
     description: "Fetch a public HTML page, extract the main article with Readability, and return Markdown.",
     promptSnippet: "Read a specific public URL and return cleaned Markdown article content.",
-    promptGuidelines: ["Use read_url when the user provides a URL or when detailed source content is needed from a known URL."],
+    promptGuidelines: ["Use web_fetch when the user provides a URL or when detailed source content is needed from a known URL."],
     parameters: {
       type: "object",
       properties: {

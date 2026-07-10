@@ -39,7 +39,7 @@ Output:
 }
 ```
 
-### `read_url`
+### `web_fetch`
 
 Downloads one HTML page, extracts the main article, and returns Markdown.
 
@@ -68,7 +68,7 @@ Output:
 
 - No browser automation.
 - No JavaScript rendering.
-- No combined `search_and_read` tool; agents can compose `web_search` and `read_url` explicitly.
+- No combined `search_and_fetch` tool; agents can compose `web_search` and `web_fetch` explicitly.
 - No cache or provider abstraction until the basic extension proves useful.
 
 ## Pipeline
@@ -77,7 +77,7 @@ Output:
 web_search:
 DuckDuckGo HTML -> parse results -> title/url/snippet
 
-read_url:
+web_fetch:
 URL -> fetch HTML -> Readability -> Turndown -> Markdown
 ```
 
@@ -89,12 +89,12 @@ Keep the implementation bounded:
 - cap response size
 - follow a small number of redirects
 - reject non-HTTP(S) schemes
-- only accept HTML-ish content types for `read_url`
+- only accept HTML-ish content types for `web_fetch`
 - honor cancellation signals
 
 ## Agent Usage Guidance
 
 - Use `web_search` when discovering relevant public URLs.
-- Use `read_url` when detailed source content is needed from a known URL.
+- Use `web_fetch` when detailed source content is needed from a known URL.
 - Prefer reading only the minimum number of pages needed to answer the question.
 - Always preserve source URLs in returned data so downstream answers can cite them.
