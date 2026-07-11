@@ -1,9 +1,9 @@
 ---
-description: Review unstaged changes in the working tree
+description: Review unstaged and untracked changes in the working tree
 argument-hint: "[focus]"
 ---
 
-Review the unstaged changes in the current working tree. Optional focus from the user: ${ARGUMENTS:-none}
+Review the unstaged tracked changes and untracked files in the current working tree. Optional focus from the user: ${ARGUMENTS:-none}
 
 Workflow:
 
@@ -12,14 +12,15 @@ Workflow:
    - `git diff --stat`
    - `git diff --name-status`
    - `git diff`
+   - `git ls-files --others --exclude-standard`
+   - Read the complete contents of untracked files (there is no diff for them)
 
 2. Scope the review:
-   - Focus on unstaged tracked-file changes from `git diff`
+   - Review unstaged tracked-file changes from `git diff` and all untracked files reported by Git
    - Note staged changes separately if `git status` shows any, but do not review them unless needed for context
-   - Note untracked files separately; read them only if they appear directly relevant to the unstaged changes
 
 3. Understand the intent before judging:
-   - Summarize what the unstaged change appears to do
+   - Summarize what the unstaged and untracked changes appear to do
    - Identify the riskiest files or paths first
    - Read surrounding code for non-trivial changes instead of relying only on the diff
    - Inspect relevant tests, call sites, config, migrations, or docs when they affect correctness
@@ -34,7 +35,7 @@ Review priorities, in order:
 
 Guidelines:
 
-- Focus on actionable issues that should be addressed before staging or committing
+- Focus on actionable issues in unstaged or untracked files that should be addressed before staging or committing
 - Do not nitpick formatting or style unless it affects readability, correctness, or consistency with nearby code
 - Do not invent issues; verify claims against the code when possible
 - Prefer fewer, higher-confidence findings over a long speculative list
@@ -43,7 +44,7 @@ Guidelines:
 
 Output format:
 
-1. Start with a short summary of the unstaged change and overall risk level: **low**, **medium**, or **high**
+1. Start with a short summary of the unstaged and untracked changes and overall risk level: **low**, **medium**, or **high**
 2. Then list findings by severity:
    - **Critical** — Bugs, security issues, or regressions that must be fixed
    - **Warning** — Likely issues or important gaps worth addressing
@@ -53,4 +54,4 @@ Output format:
    - What is wrong
    - Why it matters
    - A concrete suggested fix
-4. If there are no findings, say that the unstaged changes look good and mention any validation gaps you noticed
+4. If there are no findings, say that the unstaged and untracked changes look good and mention any validation gaps you noticed
