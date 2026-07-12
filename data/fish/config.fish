@@ -6,14 +6,21 @@ set -x PATH "$HOME/.cargo/bin" $PATH
 # Go
 set -x PATH "$HOME/go/bin" $PATH
 
-# Homebrew
-set -x HOMEBREW_NO_ANALYTICS 1
-set -x HOMEBREW_NO_ENV_HINTS 1
-switch (uname)
+# OS-specific setup
+set -l os (uname)
+switch $os
     case Darwin
+        # Homebrew
         set -x PATH /opt/homebrew/bin $PATH
         set -x PATH /opt/homebrew/opt/curl/bin $PATH
+
+        # Tailscale
+        alias tailscale "/Applications/Tailscale.app/Contents/MacOS/Tailscale"
+
+        # llvm
+        set -x PATH $PATH /opt/homebrew/opt/llvm/bin
     case Linux
+        # Homebrew
         set -x HOMEBREW_PREFIX /home/linuxbrew/.linuxbrew
         set -x HOMEBREW_CELLAR /home/linuxbrew/.linuxbrew/Cellar
         set -x HOMEBREW_REPOSITORY /home/linuxbrew/.linuxbrew/Homebrew
@@ -21,6 +28,8 @@ switch (uname)
         set -x MANPATH /home/linuxbrew/.linuxbrew/share/man $MANPATH
         set -x INFOPATH /home/linuxbrew/.linuxbrew/share/info $INFOPATH
 end
+set -x HOMEBREW_NO_ANALYTICS 1
+set -x HOMEBREW_NO_ENV_HINTS 1
 
 # Starship
 set -x STARSHIP_LOG error
@@ -31,17 +40,7 @@ alias ls="eza"
 alias la="eza -la"
 
 # Tailscale
-switch (uname)
-    case Darwin
-        alias tailscale "/Applications/Tailscale.app/Contents/MacOS/Tailscale"
-end
 alias ts="tailscale"
-
-# llvm
-switch (uname)
-    case Darwin
-        set -x PATH $PATH /opt/homebrew/opt/llvm/bin
-end
 
 set -x PATH $PATH $HOME/.local/bin
 
