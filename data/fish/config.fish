@@ -14,9 +14,6 @@ switch $os
         set -x PATH /opt/homebrew/bin $PATH
         set -x PATH /opt/homebrew/opt/curl/bin $PATH
 
-        # Tailscale
-        alias tailscale "/Applications/Tailscale.app/Contents/MacOS/Tailscale"
-
         # llvm
         set -x PATH $PATH /opt/homebrew/opt/llvm/bin
     case Linux
@@ -31,35 +28,40 @@ end
 set -x HOMEBREW_NO_ANALYTICS 1
 set -x HOMEBREW_NO_ENV_HINTS 1
 
-# Starship
-set -x STARSHIP_LOG error
-starship init fish | source
-
-# Eza
-alias ls="eza"
-alias la="eza -la"
-
-# Tailscale
-alias ts="tailscale"
-
 set -x PATH $PATH $HOME/.local/bin
 
 # Defualt editor
 set -x VISUAL nvim
 set -x EDITOR $VISUAL
 
-# Share history immediately
-set -U fish_history_share yes
+if status is-interactive
+    # Starship
+    set -x STARSHIP_LOG error
+    starship init fish | source
 
-# Setup fzf
-set -x FD_SEARCH "fd --hidden --follow --exclude '/.git/'"
-set -x FZF_DEFAULT_COMMAND "$FD_SEARCH --type f"
-set -x FZF_CTRL_T_COMMAND "$FZF_DEFAULT_COMMAND"
-set -x FZF_ALT_C_COMMAND "$FD_SEARCH --type d"
-set -x FZF_DEFAULT_OPTS "--no-height"
-set -x FZF_CTRL_T_OPTS "--preview 'bat -n --color=always {}'"
-set -x FZF_ALT_C_OPTS "--preview 'eza -la --color=always {}'"
-fzf --fish | source
+    # Eza
+    alias ls="eza"
+    alias la="eza -la"
+
+    # Tailscale
+    if test $os = Darwin
+        alias tailscale "/Applications/Tailscale.app/Contents/MacOS/Tailscale"
+    end
+    alias ts="tailscale"
+
+    # Share history immediately
+    set -U fish_history_share yes
+
+    # Setup fzf
+    set -x FD_SEARCH "fd --hidden --follow --exclude '/.git/'"
+    set -x FZF_DEFAULT_COMMAND "$FD_SEARCH --type f"
+    set -x FZF_CTRL_T_COMMAND "$FZF_DEFAULT_COMMAND"
+    set -x FZF_ALT_C_COMMAND "$FD_SEARCH --type d"
+    set -x FZF_DEFAULT_OPTS "--no-height"
+    set -x FZF_CTRL_T_OPTS "--preview 'bat -n --color=always {}'"
+    set -x FZF_ALT_C_OPTS "--preview 'eza -la --color=always {}'"
+    fzf --fish | source
+end
 
 # Run optional local script
 set private $HOME/.config/fish/config-custom.fish
