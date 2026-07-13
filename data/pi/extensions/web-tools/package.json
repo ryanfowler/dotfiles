@@ -6,6 +6,9 @@
   "pi": {
     "extensions": ["./index.ts"]
   },
+  "scripts": {
+    "test": "node --experimental-strip-types --test index.test.mjs"
+  },
   "dependencies": {
     "@joplin/turndown-plugin-gfm": "^1.0.67",
     "@mozilla/readability": "^0.6.0",

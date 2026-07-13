@@ -1,5 +1,7 @@
 import { Readability } from "@mozilla/readability";
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
+import { lookup } from "node:dns/promises";
+import { BlockList, isIP } from "node:net";
 import { JSDOM } from "jsdom";
 import TurndownService from "turndown";
 import { gfm } from "@joplin/turndown-plugin-gfm";
@@ -11,12 +13,28 @@ type SearchResult = {
 };
 
 type ReadUrlResult = {
-  title: string;
   url: string;
+  contentType: string;
+  contentFormat: "markdown" | "text" | "base64";
+  content: string;
+  bytes: number;
+  title?: string;
   excerpt?: string | null;
   byline?: string | null;
-  markdown: string;
-  length: number;
+  length?: number;
+};
+
+type FetchedResource = {
+  url: string;
+  contentType: string;
+  mediaType: string;
+  charset?: string;
+  bytes: Uint8Array;
+};
+
+type ReadUrlOptions = {
+  maxBytes?: number;
+  timeoutMs?: number;
 };
 
 const DDG_SEARCH_URL = "https://html.duckduckgo.com/html/";
@@ -24,6 +42,37 @@ const USER_AGENT = "pi-web-tools/0.1 (+https://github.com/ryanfowler/dotfiles)";
 const MAX_BYTES = 5 * 1024 * 1024;
 const TIMEOUT_MS = 10_000;
 const MAX_REDIRECTS = 5;
+
+const NON_PUBLIC_ADDRESSES = new BlockList();
+for (const [network, prefix] of [
+  ["0.0.0.0", 8],
+  ["10.0.0.0", 8],
+  ["100.64.0.0", 10],
+  ["127.0.0.0", 8],
+  ["169.254.0.0", 16],
+  ["172.16.0.0", 12],
+  ["192.0.0.0", 24],
+  ["192.0.2.0", 24],
+  ["192.168.0.0", 16],
+  ["198.18.0.0", 15],
+  ["198.51.100.0", 24],
+  ["203.0.113.0", 24],
+  ["224.0.0.0", 4],
+  ["240.0.0.0", 4],
+] as const) {
+  NON_PUBLIC_ADDRESSES.addSubnet(network, prefix, "ipv4");
+  NON_PUBLIC_ADDRESSES.addSubnet(`::ffff:${network}`, 96 + prefix, "ipv6");
+}
+for (const [network, prefix] of [
+  ["::", 128],
+  ["::1", 128],
+  ["2001:db8::", 32],
+  ["fc00::", 7],
+  ["fe80::", 10],
+  ["ff00::", 8],
+] as const) {
+  NON_PUBLIC_ADDRESSES.addSubnet(network, prefix, "ipv6");
+}
 
 function text(element: Element | null): string {
   return element?.textContent?.replace(/\s+/g, " ").trim() ?? "";
@@ -44,10 +93,14 @@ function throwIfAborted(signal?: AbortSignal) {
   signal?.throwIfAborted();
 }
 
-function timeoutSignal(message: string, signal?: AbortSignal): { signal: AbortSignal; cleanup: () => void } {
+function timeoutSignal(
+  message: string,
+  signal?: AbortSignal,
+  timeoutMs = TIMEOUT_MS,
+): { signal: AbortSignal; cleanup: () => void } {
   throwIfAborted(signal);
   const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(new Error(message)), TIMEOUT_MS);
+  const timeout = setTimeout(() => controller.abort(new Error(message)), timeoutMs);
   const onAbort = () => controller.abort(signal?.reason);
   signal?.addEventListener("abort", onAbort, { once: true });
   if (signal?.aborted) onAbort();
@@ -138,11 +191,71 @@ function validateHttpUrl(rawUrl: string): URL {
   return url;
 }
 
+function isNonPublicAddress(address: string): boolean {
+  const family = isIP(address);
+  return family !== 0 && NON_PUBLIC_ADDRESSES.check(address, family === 4 ? "ipv4" : "ipv6");
+}
+
+async function validatePublicHttpUrl(rawUrl: string): Promise<URL> {
+  const url = validateHttpUrl(rawUrl);
+  const hostname = url.hostname.replace(/^\[|\]$/g, "");
+  const family = isIP(hostname);
+  const addresses = family ? [hostname] : (await lookup(hostname, { all: true, verbatim: true })).map(({ address }) => address);
+
+  if (addresses.length === 0 || addresses.some(isNonPublicAddress)) {
+    throw new Error(`URL resolves to a non-public address: ${url.hostname}`);
+  }
+  return url;
+}
+
 async function readResponseText(response: Response, signal?: AbortSignal): Promise<string> {
   return new TextDecoder().decode(await readResponseBytes(response, signal));
 }
 
-async function readResponseBytes(response: Response, signal?: AbortSignal): Promise<Uint8Array> {
+function parseContentType(header: string | null): { contentType: string; mediaType: string; charset?: string } {
+  const contentType = header?.trim() || "application/octet-stream";
+  const [type = "", ...parameters] = contentType.split(";");
+  const mediaType = type.trim().toLowerCase() || "application/octet-stream";
+  const charsetParameter = parameters.find((parameter) => /^\s*charset\s*=/i.test(parameter));
+  const charset = charsetParameter?.replace(/^\s*charset\s*=\s*/i, "").trim().replace(/^(["'])(.*)\1$/, "$2");
+  return { contentType, mediaType, ...(charset ? { charset } : {}) };
+}
+
+function decodeText(bytes: Uint8Array, charset?: string): string {
+  try {
+    return new TextDecoder(charset || "utf-8").decode(bytes);
+  } catch {
+    return new TextDecoder().decode(bytes);
+  }
+}
+
+function isHtml(mediaType: string): boolean {
+  return mediaType === "text/html" || mediaType === "application/xhtml+xml";
+}
+
+function isMarkdown(mediaType: string): boolean {
+  return ["text/markdown", "text/x-markdown", "application/markdown", "application/x-markdown"].includes(mediaType);
+}
+
+function isText(mediaType: string): boolean {
+  if (mediaType.startsWith("text/")) return true;
+  if (mediaType.endsWith("+json") || mediaType.endsWith("+xml")) return true;
+  return [
+    "application/json",
+    "application/xml",
+    "application/javascript",
+    "application/x-javascript",
+    "application/yaml",
+    "application/x-yaml",
+    "application/toml",
+    "application/graphql",
+    "application/sql",
+    "application/x-www-form-urlencoded",
+    "image/svg+xml",
+  ].includes(mediaType);
+}
+
+async function readResponseBytes(response: Response, signal?: AbortSignal, maxBytes = MAX_BYTES): Promise<Uint8Array> {
   throwIfAborted(signal);
   const reader = response.body?.getReader();
   if (!reader) throw new Error("response body is not readable");
@@ -155,9 +268,9 @@ async function readResponseBytes(response: Response, signal?: AbortSignal): Prom
     if (done) break;
     if (!value) continue;
     received += value.byteLength;
-    if (received > MAX_BYTES) {
+    if (received > maxBytes) {
       await reader.cancel().catch(() => undefined);
-      throw new Error(`response exceeds ${MAX_BYTES} bytes`);
+      throw new Error(`response exceeds ${maxBytes} bytes`);
     }
     chunks.push(value);
   }
@@ -171,19 +284,20 @@ async function readResponseBytes(response: Response, signal?: AbortSignal): Prom
   return bytes;
 }
 
-async function fetchHtml(rawUrl: string, signal?: AbortSignal): Promise<{ url: string; html: string }> {
+async function fetchResource(rawUrl: string, signal?: AbortSignal, options: ReadUrlOptions = {}): Promise<FetchedResource> {
   throwIfAborted(signal);
   let currentUrl = validateHttpUrl(rawUrl).toString();
-  const timeout = timeoutSignal("fetch timeout", signal);
+  const timeout = timeoutSignal("fetch timeout", signal, options.timeoutMs);
 
   try {
     for (let redirect = 0; redirect <= MAX_REDIRECTS; redirect++) {
-      throwIfAborted(signal);
+      throwIfAborted(timeout.signal);
+      currentUrl = (await validatePublicHttpUrl(currentUrl)).toString();
       const response = await fetch(currentUrl, {
         redirect: "manual",
         signal: timeout.signal,
         headers: {
-          Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+          Accept: "text/html,text/markdown;q=0.9,text/*;q=0.8,*/*;q=0.7",
           "User-Agent": USER_AGENT,
         },
       });
@@ -193,7 +307,7 @@ async function fetchHtml(rawUrl: string, signal?: AbortSignal): Promise<{ url: s
         const location = response.headers.get("location");
         if (!location) throw new Error(`redirect without Location from ${currentUrl}`);
         currentUrl = validateHttpUrl(new URL(location, currentUrl).toString()).toString();
-        throwIfAborted(signal);
+        throwIfAborted(timeout.signal);
         continue;
       }
 
@@ -202,13 +316,12 @@ async function fetchHtml(rawUrl: string, signal?: AbortSignal): Promise<{ url: s
         throw new Error(`HTTP ${response.status} fetching ${currentUrl}`);
       }
 
-      const contentType = response.headers.get("content-type") ?? "";
-      if (!/\b(text\/html|application\/xhtml\+xml)\b/i.test(contentType)) {
-        await response.body?.cancel().catch(() => undefined);
-        throw new Error(`non-HTML content type: ${contentType || "unknown"}`);
-      }
-
-      return { url: currentUrl, html: await readResponseText(response, signal) };
+      const contentType = parseContentType(response.headers.get("content-type"));
+      return {
+        url: currentUrl,
+        ...contentType,
+        bytes: await readResponseBytes(response, timeout.signal, options.maxBytes),
+      };
     }
     throw new Error(`too many redirects fetching ${rawUrl}`);
   } finally {
@@ -216,32 +329,65 @@ async function fetchHtml(rawUrl: string, signal?: AbortSignal): Promise<{ url: s
   }
 }
 
-async function readUrl(url: string, signal?: AbortSignal): Promise<ReadUrlResult> {
+export async function readUrl(url: string, signal?: AbortSignal, options: ReadUrlOptions = {}): Promise<ReadUrlResult> {
   throwIfAborted(signal);
-  const fetched = await fetchHtml(url, signal);
+  const fetched = await fetchResource(url, signal, options);
   throwIfAborted(signal);
-  const dom = new JSDOM(fetched.html, { url: fetched.url });
-  const article = new Readability(dom.window.document).parse();
-  dom.window.close();
-  if (!article?.content) throw new Error("Readability could not extract article content");
 
-  throwIfAborted(signal);
-  const articleDom = new JSDOM(`<article>${article.content}</article>`);
-  for (const element of articleDom.window.document.querySelectorAll("script,style,iframe,noscript")) {
-    element.remove();
+  const metadata = {
+    url: fetched.url,
+    contentType: fetched.contentType,
+    bytes: fetched.bytes.byteLength,
+  };
+
+  if (isHtml(fetched.mediaType)) {
+    const html = decodeText(fetched.bytes, fetched.charset);
+    const dom = new JSDOM(html, { url: fetched.url });
+    const article = new Readability(dom.window.document).parse();
+    dom.window.close();
+    if (!article?.content) throw new Error("Readability could not extract article content");
+
+    throwIfAborted(signal);
+    const articleDom = new JSDOM(`<article>${article.content}</article>`);
+    for (const element of articleDom.window.document.querySelectorAll("script,style,iframe,noscript")) {
+      element.remove();
+    }
+    const turndown = new TurndownService({ codeBlockStyle: "fenced", headingStyle: "atx", bulletListMarker: "-" });
+    turndown.use(gfm);
+    const content = turndown.turndown(articleDom.window.document.body.innerHTML).trim();
+    articleDom.window.close();
+
+    return {
+      ...metadata,
+      contentFormat: "markdown",
+      content,
+      title: article.title || new URL(fetched.url).hostname,
+      excerpt: article.excerpt,
+      byline: article.byline,
+      length: article.length ?? article.textContent?.length ?? 0,
+    };
   }
-  const turndown = new TurndownService({ codeBlockStyle: "fenced", headingStyle: "atx", bulletListMarker: "-" });
-  turndown.use(gfm);
-  const markdown = turndown.turndown(articleDom.window.document.body.innerHTML).trim();
-  articleDom.window.close();
+
+  if (isMarkdown(fetched.mediaType)) {
+    return {
+      ...metadata,
+      contentFormat: "markdown",
+      content: decodeText(fetched.bytes, fetched.charset),
+    };
+  }
+
+  if (isText(fetched.mediaType)) {
+    return {
+      ...metadata,
+      contentFormat: "text",
+      content: decodeText(fetched.bytes, fetched.charset),
+    };
+  }
 
   return {
-    title: article.title || new URL(fetched.url).hostname,
-    url: fetched.url,
-    excerpt: article.excerpt,
-    byline: article.byline,
-    markdown,
-    length: article.length ?? article.textContent?.length ?? 0,
+    ...metadata,
+    contentFormat: "base64",
+    content: Buffer.from(fetched.bytes).toString("base64"),
   };
 }
 
@@ -268,8 +414,8 @@ export default function (pi: ExtensionAPI) {
   pi.registerTool({
     name: "web_fetch",
     label: "Web Fetch",
-    description: "Fetch a public HTML page, extract the main article with Readability, and return Markdown.",
-    promptSnippet: "Read a specific public URL and return cleaned Markdown article content.",
+    description: "Fetch a public URL. HTML is extracted with Readability and returned as Markdown; Markdown and text are passed through; other content is returned as base64. The result includes the source Content-Type.",
+    promptSnippet: "Fetch a public URL with content-type-aware handling; HTML becomes Markdown and other content is passed through.",
     promptGuidelines: ["Use web_fetch when the user provides a URL or when detailed source content is needed from a known URL."],
     parameters: {
       type: "object",

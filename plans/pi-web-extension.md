@@ -41,7 +41,7 @@ Output:
 
 ### `web_fetch`
 
-Downloads one HTML page, extracts the main article, and returns Markdown.
+Downloads one URL and returns content according to its Content-Type. HTML is extracted and converted to Markdown, Markdown is passed through unchanged, other text is passed through, and binary content is base64-encoded.
 
 Input:
 
@@ -55,12 +55,15 @@ Output:
 
 ```json
 {
-  "title": "...",
   "url": "...",
+  "contentType": "text/html; charset=utf-8",
+  "contentFormat": "markdown",
+  "content": "...",
+  "bytes": 12345,
+  "title": "...",
   "excerpt": "...",
   "byline": "...",
-  "markdown": "...",
-  "length": 12345
+  "length": 12000
 }
 ```
 
@@ -78,7 +81,7 @@ web_search:
 DuckDuckGo HTML -> parse results -> title/url/snippet
 
 web_fetch:
-URL -> fetch HTML -> Readability -> Turndown -> Markdown
+URL -> inspect Content-Type -> HTML: Readability/Turndown; Markdown/text: pass through; binary: base64
 ```
 
 ## Safety and Reliability
@@ -89,7 +92,7 @@ Keep the implementation bounded:
 - cap response size
 - follow a small number of redirects
 - reject non-HTTP(S) schemes
-- only accept HTML-ish content types for `web_fetch`
+- handle HTML, Markdown, text, and binary responses explicitly and report the source Content-Type
 - honor cancellation signals
 
 ## Agent Usage Guidance
