@@ -82,8 +82,6 @@ rules:
     dst: "$HOME/.pi/agent/prompts/commit.md"
   - src: "data/pi/prompts/review.md"
     dst: "$HOME/.pi/agent/prompts/review.md"
-  - src: "data/pi/prompts/review-branch.md"
-    dst: "$HOME/.pi/agent/prompts/review-branch.md"
 
   # fish
   - src: "data/fish/config.fish"
