@@ -1,5 +1,5 @@
 ---
-description: Commit the current changes
+description: Commit the current changes and create a pull request
 argument-hint: "[instructions]"
 ---
 
@@ -38,11 +38,11 @@ Workflow:
 6. Push the commit:
    - Push the branch to origin, setting upstream when needed
 
-7. Ask about creating a pull request:
-   - After the commit has been pushed, ask the user whether they want a pull request created
-   - Do not create a pull request unless the user confirms
-   - If confirmed, create a pull request against the primary branch using `gh pr create` when available
+7. Create a pull request:
+   - After the commit has been pushed, create a pull request against the primary branch using `gh pr create`
+   - Do this by default without asking for confirmation unless the user explicitly says not to create a pull request
    - Write a concise PR title and body summarizing changes and validation
+   - If `gh` is unavailable or PR creation fails, report the issue clearly
 
 8. Final response:
    - Commit SHA and message
