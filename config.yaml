@@ -58,7 +58,8 @@ npm:
 
 commands:
   - "go install github.com/ryanfowler/gitlink@latest"
-  - "npm install --prefix data/pi/extensions/web-tools --quiet --ignore-scripts --no-fund --no-update-notifier"
+  - "go install github.com/ryanfowler/webtools@latest"
+  - 'webtools_bin="$(go env GOBIN)"; [ -n "$webtools_bin" ] || webtools_bin="$(go env GOPATH)/bin"; "$webtools_bin/webtools" install --force pi'
 
 rules:
   # alacritty
@@ -76,12 +77,16 @@ rules:
   # pi
   - src: "data/pi/extensions/rate-limits"
     dst: "$HOME/.pi/agent/extensions/rate-limits"
-  - src: "data/pi/extensions/web-tools"
-    dst: "$HOME/.pi/agent/extensions/web-tools"
+  - src: "data/pi/extensions/subagents"
+    dst: "$HOME/.pi/agent/extensions/subagents"
   - src: "data/pi/prompts/commit.md"
     dst: "$HOME/.pi/agent/prompts/commit.md"
+  - src: "data/pi/prompts/pir.md"
+    dst: "$HOME/.pi/agent/prompts/pir.md"
   - src: "data/pi/prompts/review.md"
     dst: "$HOME/.pi/agent/prompts/review.md"
+  - src: "data/pi/prompts/sub-review.md"
+    dst: "$HOME/.pi/agent/prompts/sub-review.md"
 
   # fish
   - src: "data/fish/config.fish"
