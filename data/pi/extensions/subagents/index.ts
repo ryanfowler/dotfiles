@@ -21,6 +21,7 @@ import {
 import { Container, Markdown, Spacer, Text } from "@earendil-works/pi-tui";
 import { Type } from "typebox";
 import { resolveSubagentProjectTrust } from "./trust.js";
+import { ExpandedUpdateGate } from "./update-gate.js";
 
 const ModelSchema = StringEnum(["gpt-5.6-luna", "gpt-5.6-sol"] as const, {
   description: "Select Luna for straightforward, bounded tasks. Select Sol for complex, ambiguous, broad, or high-risk tasks.",
@@ -58,6 +59,7 @@ interface SubagentDetails {
 
 interface SubagentRenderState {
   durationTimer?: ReturnType<typeof setInterval>;
+  expandedDuration?: string;
 }
 
 function resultText(result: any): string {
@@ -287,6 +289,8 @@ function aggregateUsage(session: any): Usage | undefined {
 }
 
 export default function (pi: ExtensionAPI) {
+  const updateGate = new ExpandedUpdateGate();
+
   pi.registerTool({
     name: "subagent",
     label: "Subagent",
@@ -299,7 +303,7 @@ export default function (pi: ExtensionAPI) {
       reasoning_effort: EffortSchema,
       read_only: Type.Optional(Type.Boolean({ description: "Enable inspection mode: remove edit/write tools. Web search/fetch and bash remain available; bash is not sandboxed." })),
     }),
-    async execute(_id, params, signal, onUpdate, ctx) {
+    async execute(toolCallId, params, signal, onUpdate, ctx) {
       if (signal?.aborted) throw new Error("Subagent aborted");
       const cwd = await workingDirectory(params.working_dir, ctx);
       const settingsManager = SettingsManager.create(cwd, getAgentDir());
@@ -349,13 +353,17 @@ export default function (pi: ExtensionAPI) {
         if (pendingUpdate === undefined) return;
         const text = pendingUpdate;
         pendingUpdate = undefined;
+        // Updating content below the terminal viewport forces the terminal back
+        // to the bottom. Pause partial updates while the user reads the expanded
+        // output. The final result still renders when execution completes.
+        if (updateGate.isPaused(toolCallId)) return;
         onUpdate?.({
           content: [{ type: "text", text }],
           details: snapshotDetails(details),
         });
       };
       const emitUpdate = (text: string, immediate = false) => {
-        if (!onUpdate) return;
+        if (!onUpdate || updateGate.isPaused(toolCallId)) return;
         pendingUpdate = text;
         if (immediate) {
           flushUpdate();
@@ -460,6 +468,7 @@ export default function (pi: ExtensionAPI) {
         };
       } finally {
         if (updateTimer) clearTimeout(updateTimer);
+        updateGate.delete(toolCallId);
         signal?.removeEventListener("abort", abort);
         unsubscribe();
         session.dispose();
@@ -483,13 +492,22 @@ export default function (pi: ExtensionAPI) {
 
     renderResult(result, { expanded, isPartial }, theme, context) {
       const state = context.state as SubagentRenderState;
-      if (isPartial && !context.isError && !state.durationTimer) {
+      updateGate.sync(context.toolCallId, {
+        expanded,
+        isPartial,
+        isError: context.isError,
+      });
+      // A changing line above the terminal viewport makes the TUI redraw the full
+      // screen. Keep the expanded header stable so users can scroll through a
+      // running subagent without each duration tick returning them to the bottom.
+      if (isPartial && !context.isError && !expanded && !state.durationTimer) {
         state.durationTimer = setInterval(context.invalidate, 1_000);
       }
-      if ((!isPartial || context.isError) && state.durationTimer) {
+      if ((!isPartial || context.isError || expanded) && state.durationTimer) {
         clearInterval(state.durationTimer);
         state.durationTimer = undefined;
       }
+      if (!expanded) state.expandedDuration = undefined;
 
       const details = result.details as SubagentDetails | undefined;
       if (!details || !Array.isArray(details.activities)) {
@@ -505,7 +523,9 @@ export default function (pi: ExtensionAPI) {
           ? theme.fg("error", "✗")
           : theme.fg("success", "✓");
       const toolCount = details.activities.filter((activity) => activity.type === "tool").length;
-      const duration = formatDuration(details.startedAt, details.completedAt);
+      const duration = running && expanded
+        ? state.expandedDuration ??= formatDuration(details.startedAt, details.completedAt)
+        : formatDuration(details.startedAt, details.completedAt);
       const metadata = [
         details.model,
         details.reasoningEffort,
