@@ -22,7 +22,13 @@ import { Container, Markdown, Spacer, Text } from "@earendil-works/pi-tui";
 import { Type } from "typebox";
 import { resolveSubagentProjectTrust } from "./trust.js";
 
-const EffortSchema = StringEnum(["off", "minimal", "low", "medium", "high", "xhigh", "max"] as const);
+const ModelSchema = StringEnum(["gpt-5.6-luna", "gpt-5.6-sol"] as const, {
+  description: "Select Luna for straightforward, bounded tasks. Select Sol for complex, ambiguous, broad, or high-risk tasks.",
+});
+const EffortSchema = StringEnum(["off", "minimal", "low", "medium", "high", "xhigh", "max"] as const, {
+  description: "Select the thinking level based on the delegated task's complexity, scope, and risk.",
+});
+const ALLOWED_MODEL_PROVIDER = "openai-codex";
 const EXCLUDED_TOOLS = ["subagent", "subagent_spawn", "subagent_manage", "workflow", "ask_user", "ask_question"];
 const COLLAPSED_ACTIVITY_COUNT = 8;
 const MAX_TOOL_OUTPUT_CHARS = 1_200;
@@ -209,22 +215,10 @@ async function workingDirectory(input: string | undefined, ctx: ExtensionContext
   return realpath(cwd);
 }
 
-function resolveModel(ctx: ExtensionContext, requested?: string) {
-  if (!requested) return ctx.model;
-  const slash = requested.indexOf("/");
-  if (slash > 0) {
-    const model = ctx.modelRegistry.find(requested.slice(0, slash), requested.slice(slash + 1));
-    if (!model) throw new Error(`Unknown model: ${requested}`);
-    return model;
-  }
-  if (ctx.model) {
-    const preferred = ctx.modelRegistry.find(ctx.model.provider, requested);
-    if (preferred) return preferred;
-  }
-  const matches = ctx.modelRegistry.getAll().filter((model) => model.id === requested);
-  if (matches.length === 1) return matches[0];
-  if (matches.length === 0) throw new Error(`Unknown model: ${requested}`);
-  throw new Error(`Ambiguous model id ${requested}; use provider/model`);
+function resolveModel(ctx: ExtensionContext, requested: string) {
+  const model = ctx.modelRegistry.find(ALLOWED_MODEL_PROVIDER, requested);
+  if (!model) throw new Error(`Required subagent model is unavailable: ${ALLOWED_MODEL_PROVIDER}/${requested}`);
+  return model;
 }
 
 async function createChildModelRuntime(ctx: ExtensionContext, model: Model<any> | undefined): Promise<ModelRuntime> {
@@ -296,13 +290,13 @@ export default function (pi: ExtensionAPI) {
   pi.registerTool({
     name: "subagent",
     label: "Subagent",
-    description: "Run one isolated pi agent and wait for its result. Multiple sibling calls can run in parallel. All subagents can search and fetch the web. Inspection mode (`read_only`) removes edit/write tools, but bash is not sandboxed, so prompts must restrict it to inspection commands.",
+    description: "Run one isolated pi agent and wait for its result. Multiple sibling calls can run in parallel. Luna is the basic model for straightforward, bounded tasks. Sol is the advanced model for complex, ambiguous, broad, or high-risk tasks. Choose the model and thinking level separately based on the delegated task's requirements, complexity, scope, and risk. All subagents can search and fetch the web. Inspection mode (`read_only`) removes edit/write tools, but bash is not sandboxed, so prompts must restrict it to inspection commands.",
     promptSnippet: "Run an isolated pi agent synchronously",
     parameters: Type.Object({
       prompt: Type.String({ description: "Complete task for the child agent" }),
       working_dir: Type.Optional(Type.String({ description: "Working directory, relative to the parent by default" })),
-      model: Type.Optional(Type.String({ description: "provider/model or an unambiguous model id" })),
-      reasoning_effort: Type.Optional(EffortSchema),
+      model: ModelSchema,
+      reasoning_effort: EffortSchema,
       read_only: Type.Optional(Type.Boolean({ description: "Enable inspection mode: remove edit/write tools. Web search/fetch and bash remain available; bash is not sandboxed." })),
     }),
     async execute(_id, params, signal, onUpdate, ctx) {
@@ -325,7 +319,7 @@ export default function (pi: ExtensionAPI) {
         cwd,
         model,
         modelRuntime,
-        thinkingLevel: params.reasoning_effort ?? ctx.thinkingLevel,
+        thinkingLevel: params.reasoning_effort,
         tools: params.read_only
           ? ["read", "bash", "web_search", "web_fetch"]
           : ["read", "bash", "edit", "write", "web_search", "web_fetch"],
@@ -337,7 +331,7 @@ export default function (pi: ExtensionAPI) {
       const details: SubagentDetails = {
         status: "running",
         model: session.model ? `${session.model.provider}/${session.model.id}` : undefined,
-        reasoningEffort: params.reasoning_effort ?? ctx.thinkingLevel,
+        reasoningEffort: params.reasoning_effort,
         readOnly: params.read_only ?? false,
         startedAt: Date.now(),
         activities: [],
