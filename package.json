@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "check": "node --check src/main.js && node --check data/pi/extensions/subagents/index.ts && node --test data/pi/extensions/subagents/trust.test.mjs",
+    "check": "node --check src/main.js && node --check data/pi/extensions/subagents/index.ts && node --test data/pi/extensions/subagents/*.test.mjs",
     "install-dotfiles": "node src/main.js"
   },
   "dependencies": {
