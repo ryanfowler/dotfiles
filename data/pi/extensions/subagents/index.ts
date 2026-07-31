@@ -24,10 +24,10 @@ import { resolveSubagentProjectTrust } from "./trust.js";
 import { ExpandedUpdateGate } from "./update-gate.js";
 
 const ModelSchema = StringEnum(["gpt-5.6-luna", "gpt-5.6-sol"] as const, {
-  description: "Select Luna for straightforward, bounded tasks. Select Sol for complex, ambiguous, broad, or high-risk tasks.",
+  description: "Override the current agent's model when the user requests a different model.",
 });
 const EffortSchema = StringEnum(["off", "minimal", "low", "medium", "high", "xhigh", "max"] as const, {
-  description: "Select the thinking level based on the delegated task's complexity, scope, and risk.",
+  description: "Override the current agent's thinking level when the user requests a different level.",
 });
 const ALLOWED_MODEL_PROVIDER = "openai-codex";
 const EXCLUDED_TOOLS = ["subagent", "subagent_spawn", "subagent_manage", "workflow", "ask_user", "ask_question"];
@@ -294,13 +294,17 @@ export default function (pi: ExtensionAPI) {
   pi.registerTool({
     name: "subagent",
     label: "Subagent",
-    description: "Run one isolated pi agent and wait for its result. Multiple sibling calls can run in parallel. Luna is the basic model for straightforward, bounded tasks. Sol is the advanced model for complex, ambiguous, broad, or high-risk tasks. Choose the model and thinking level separately based on the delegated task's requirements, complexity, scope, and risk. All subagents can search and fetch the web. Inspection mode (`read_only`) removes edit/write tools, but bash is not sandboxed, so prompts must restrict it to inspection commands.",
+    description: "Run one isolated pi agent and wait for its result. Multiple sibling calls can run in parallel. The subagent uses the current agent's model and thinking level by default. Set `model` or `reasoning_effort` only when the user explicitly requests an override. All subagents can search and fetch the web. Inspection mode (`read_only`) removes edit/write tools, but bash is not sandboxed, so prompts must restrict it to inspection commands.",
     promptSnippet: "Run an isolated pi agent synchronously",
+    promptGuidelines: [
+      "Only use the subagent tool when the user explicitly asks you to use subagents.",
+      "Omit the subagent model and reasoning_effort unless the user explicitly requests an override.",
+    ],
     parameters: Type.Object({
       prompt: Type.String({ description: "Complete task for the child agent" }),
       working_dir: Type.Optional(Type.String({ description: "Working directory, relative to the parent by default" })),
-      model: ModelSchema,
-      reasoning_effort: EffortSchema,
+      model: Type.Optional(ModelSchema),
+      reasoning_effort: Type.Optional(EffortSchema),
       read_only: Type.Optional(Type.Boolean({ description: "Enable inspection mode: remove edit/write tools. Web search/fetch and bash remain available; bash is not sandboxed." })),
     }),
     async execute(toolCallId, params, signal, onUpdate, ctx) {
@@ -317,13 +321,14 @@ export default function (pi: ExtensionAPI) {
       });
       settingsManager.setProjectTrusted(trusted);
 
-      const model = resolveModel(ctx, params.model);
+      const model = params.model ? resolveModel(ctx, params.model) : ctx.model;
+      const reasoningEffort = params.reasoning_effort ?? ctx.thinkingLevel ?? pi.getThinkingLevel();
       const modelRuntime = await createChildModelRuntime(ctx, model);
       const { session } = await createAgentSession({
         cwd,
         model,
         modelRuntime,
-        thinkingLevel: params.reasoning_effort,
+        thinkingLevel: reasoningEffort,
         tools: params.read_only
           ? ["read", "bash", "web_search", "web_fetch"]
           : ["read", "bash", "edit", "write", "web_search", "web_fetch"],
@@ -335,7 +340,7 @@ export default function (pi: ExtensionAPI) {
       const details: SubagentDetails = {
         status: "running",
         model: session.model ? `${session.model.provider}/${session.model.id}` : undefined,
-        reasoningEffort: params.reasoning_effort,
+        reasoningEffort,
         readOnly: params.read_only ?? false,
         startedAt: Date.now(),
         activities: [],
