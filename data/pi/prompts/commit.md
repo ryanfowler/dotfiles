@@ -18,10 +18,12 @@ Workflow:
    - Otherwise use `main` if it exists
    - Otherwise use `master` if it exists
 
-3. Review the changes before committing:
-   - Understand the intent of the diff
+3. Review and validate the changes before committing:
+   - Inspect the diff directly and understand its intent
+   - Do not call a subagent or perform a full review workflow
    - Watch for secrets, accidental debug code, generated junk, or unrelated changes
-   - If changes look unsafe or unrelated, stop and ask before committing
+   - Run the repository's applicable programmatic checks, such as tests, linters, type checks, format checks, or builds
+   - If changes look unsafe or unrelated, or a relevant check fails, stop and ask before committing
 
 4. Create or confirm the working branch before staging:
    - If the current branch is the primary branch, create a new appropriately named branch before staging or committing
