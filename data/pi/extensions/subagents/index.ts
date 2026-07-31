@@ -20,16 +20,16 @@ import {
 } from "@earendil-works/pi-coding-agent";
 import { Container, Markdown, Spacer, Text } from "@earendil-works/pi-tui";
 import { Type } from "typebox";
+import { resolveAvailableModel } from "./model-selection.js";
 import { resolveSubagentProjectTrust } from "./trust.js";
 import { ExpandedUpdateGate } from "./update-gate.js";
 
-const ModelSchema = StringEnum(["gpt-5.6-luna", "gpt-5.6-sol"] as const, {
-  description: "Override the current agent's model when the user requests a different model.",
+const ModelSchema = Type.String({
+  description: "Override with any available model. Use provider/model-id when the model ID is not unique.",
 });
 const EffortSchema = StringEnum(["off", "minimal", "low", "medium", "high", "xhigh", "max"] as const, {
   description: "Override the current agent's thinking level when the user requests a different level.",
 });
-const ALLOWED_MODEL_PROVIDER = "openai-codex";
 const EXCLUDED_TOOLS = ["subagent", "subagent_spawn", "subagent_manage", "workflow", "ask_user", "ask_question"];
 const COLLAPSED_ACTIVITY_COUNT = 8;
 const MAX_TOOL_OUTPUT_CHARS = 1_200;
@@ -217,12 +217,6 @@ async function workingDirectory(input: string | undefined, ctx: ExtensionContext
   return realpath(cwd);
 }
 
-function resolveModel(ctx: ExtensionContext, requested: string) {
-  const model = ctx.modelRegistry.find(ALLOWED_MODEL_PROVIDER, requested);
-  if (!model) throw new Error(`Required subagent model is unavailable: ${ALLOWED_MODEL_PROVIDER}/${requested}`);
-  return model;
-}
-
 async function createChildModelRuntime(ctx: ExtensionContext, model: Model<any> | undefined): Promise<ModelRuntime> {
   const runtime = await ModelRuntime.create();
   if (!model) return runtime;
@@ -294,7 +288,7 @@ export default function (pi: ExtensionAPI) {
   pi.registerTool({
     name: "subagent",
     label: "Subagent",
-    description: "Run one isolated pi agent and wait for its result. Multiple sibling calls can run in parallel. The subagent uses the current agent's model and thinking level by default. Set `model` or `reasoning_effort` only when the user explicitly requests an override. All subagents can search and fetch the web. Inspection mode (`read_only`) removes edit/write tools, but bash is not sandboxed, so prompts must restrict it to inspection commands.",
+    description: "Run one isolated pi agent and wait for its result. Multiple sibling calls can run in parallel. The subagent uses the current agent's model and thinking level by default. Set `model` to any available model or set `reasoning_effort` only when the user explicitly requests an override. All subagents can search and fetch the web. Inspection mode (`read_only`) removes edit/write tools, but bash is not sandboxed, so prompts must restrict it to inspection commands.",
     promptSnippet: "Run an isolated pi agent synchronously",
     promptGuidelines: [
       "Only use the subagent tool when the user explicitly asks you to use subagents.",
@@ -321,7 +315,9 @@ export default function (pi: ExtensionAPI) {
       });
       settingsManager.setProjectTrusted(trusted);
 
-      const model = params.model ? resolveModel(ctx, params.model) : ctx.model;
+      const model = params.model
+        ? resolveAvailableModel(ctx.modelRegistry.getAvailable(), params.model)
+        : ctx.model;
       const reasoningEffort = params.reasoning_effort ?? ctx.thinkingLevel ?? pi.getThinkingLevel();
       const modelRuntime = await createChildModelRuntime(ctx, model);
       const { session } = await createAgentSession({
