@@ -534,10 +534,13 @@ export default function (pi: ExtensionAPI) {
         `${toolCount} tool${toolCount === 1 ? "" : "s"}`,
         duration,
       ].filter(Boolean);
-      const container = context.lastComponent instanceof Container
-        ? context.lastComponent
-        : new Container();
-      container.clear();
+      // Return a new result tree for every render. The TUI keeps the previous
+      // component while it calculates its differential redraw; mutating that
+      // component in place while expansion changes the number of lines can make
+      // the old and new trees overlap, which leaves stale footer/output lines on
+      // screen. The activity data is already shared through `details`, so there
+      // is no benefit to reusing the container here.
+      const container = new Container();
       container.addChild(
         new Text(
           `${icon} ${theme.fg("toolTitle", theme.bold(running ? "Subagent running" : failed ? "Subagent failed" : "Subagent complete"))}` +
