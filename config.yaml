@@ -75,6 +75,8 @@ rules:
     dst: "$HOME/.claude/settings.json"
 
   # pi
+  - src: "data/pi/APPEND_SYSTEM.md"
+    dst: "$HOME/.pi/agent/APPEND_SYSTEM.md"
   - src: "data/pi/extensions/rate-limits"
     dst: "$HOME/.pi/agent/extensions/rate-limits"
   - src: "data/pi/extensions/subagents"
