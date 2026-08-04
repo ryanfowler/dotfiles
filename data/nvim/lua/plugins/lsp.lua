@@ -4,13 +4,14 @@ return {
 	"neovim/nvim-lspconfig",
 	event = { "BufReadPre", "BufNewFile" },
 	dependencies = {
-		{ "williamboman/mason.nvim", config = true },
-		"WhoIsSethDaniel/mason-tool-installer.nvim",
 		"hrsh7th/cmp-nvim-lsp",
 		{ "j-hui/fidget.nvim", opts = {} },
 		{ "folke/lazydev.nvim", ft = "lua", opts = {} },
 	},
 	config = function()
+		-- Keep normal LSP traffic out of the log while retaining warnings and errors.
+		vim.lsp.set_log_level("warn")
+
 		vim.api.nvim_create_autocmd("LspAttach", {
 			group = vim.api.nvim_create_augroup("kickstart-lsp-attach", { clear = true }),
 			callback = function(event)
@@ -115,8 +116,5 @@ return {
 		})
 
 		vim.lsp.enable({ "gopls", "lua_ls", "ruff", "rust_analyzer", "ts_ls", "zls" })
-
-		local ensure_installed = { "gopls", "lua-language-server", "ruff", "rust-analyzer", "typescript-language-server", "zls", "stylua" }
-		require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 	end,
 }

@@ -34,6 +34,7 @@ homebrew:
     - sqlite
     - starship
     - staticcheck
+    - stylua
     - tmux
     - tree-sitter-cli
     - typescript-language-server
@@ -112,6 +113,8 @@ rules:
   # neovim
   - src: "data/nvim/init.lua"
     dst: "$HOME/.config/nvim/init.lua"
+  - src: "data/nvim/lazy-lock.json"
+    dst: "$HOME/.config/nvim/lazy-lock.json"
   - src: "data/nvim/lua/options.lua"
     dst: "$HOME/.config/nvim/lua/options.lua"
   - src: "data/nvim/lua/keymaps.lua"
