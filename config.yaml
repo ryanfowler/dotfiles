@@ -22,7 +22,6 @@ homebrew:
     - lua-language-server
     - marksman
     - ncurses
-    - neofetch
     - neovim
     - node
     - parallel
