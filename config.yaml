@@ -83,6 +83,8 @@ rules:
     dst: "$HOME/.pi/agent/extensions/subagents"
   - src: "data/pi/prompts/commit.md"
     dst: "$HOME/.pi/agent/prompts/commit.md"
+  - src: "data/pi/prompts/irc.md"
+    dst: "$HOME/.pi/agent/prompts/irc.md"
   - src: "data/pi/prompts/pir.md"
     dst: "$HOME/.pi/agent/prompts/pir.md"
   - src: "data/pi/prompts/review.md"
