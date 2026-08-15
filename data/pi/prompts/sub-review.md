@@ -10,7 +10,7 @@ Use this workflow without stopping between review passes:
 2. Evaluate every finding against the working tree. Ignore speculative or incorrect findings. If the subagent reports no findings, stop the review loop.
 3. In the main session, resolve every valid actionable finding. Add or update tests when needed, and run the relevant validation after making changes.
 4. Call a new subagent with the same `/review` prompt to review the updated working tree. Continue to use the current agent's model and thinking level unless the user explicitly requested an override. Do not reuse a prior subagent session.
-5. Repeat steps 2 through 4 until a review reports no findings or five total subagent review passes have completed. Never exceed five review passes.
-6. Summarize the fixes, validation results, number of review passes, and any findings intentionally left unresolved. If the fifth review still reports valid findings, do not start another review pass; report the remaining findings clearly.
+5. Repeat steps 2 through 4 until a review reports no findings or three total subagent review passes have completed. Never exceed three review passes.
+6. Summarize the fixes, validation results, number of review passes, and any findings intentionally left unresolved. If the third review still reports valid findings, do not start another review pass; report the remaining findings clearly.
 
 Do not ask the user to continue between passes unless a finding requires information or a decision that cannot be inferred safely.
