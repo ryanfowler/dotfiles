@@ -13,7 +13,7 @@ Use this workflow without stopping between phases. Prompt templates cannot invok
    - Call the `subagent` tool with `read_only: true`. Use the current agent's model and thinking level unless the user explicitly requested an override.
    - Tell the subagent to review all unstaged and untracked changes with read-only commands and return only actionable findings or exactly `No actionable findings.`
    - Evaluate each finding and fix every valid actionable issue in the main session. Update and run tests as needed.
-   - Repeat with a fresh subagent until no actionable findings remain or five review passes have completed. Do not exceed five passes.
+   - Repeat with a fresh subagent until no actionable findings remain or three review passes have completed. Do not exceed three passes.
 3. **Run the `/commit` workflow:**
    - Inspect the repository state, diff, and recent commits. Determine the primary branch from `origin/HEAD`, then `main`, then `master`.
    - Run the applicable tests, linters, type checks, format checks, or builds. Stop and ask before committing if a relevant check fails or the changes are unsafe or unrelated.
