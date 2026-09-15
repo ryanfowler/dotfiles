@@ -8,6 +8,6 @@
     "install-dotfiles": "node src/main.js"
   },
   "dependencies": {
-    "yaml": "^2.6.0"
+    "yaml": "^2.9.1"
   }
 }
